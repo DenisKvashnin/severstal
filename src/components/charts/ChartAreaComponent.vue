@@ -1,16 +1,16 @@
 <template>
-  <div id="charts">
-    <div id="chart1">
-      <apexchart type="line" height="230" :options="chartOptionsArea" :series="series" />
+  <div class="chart-group-container">
+    <div>
+      <apexchart type="line" :height="720" :options="chartOptionsArea" :series="filteredSeries" />
     </div>
-    <div id="chart2">
-      <apexchart type="area" height="130" :options="chartOptionsBrush" :series="series" />
+    <div class="slider-container">
+      <q-range v-model="range" :min="0" :max="899" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted, computed } from "vue"
 
 const chartOptionsArea = {
   chart: {
@@ -20,7 +20,7 @@ const chartOptionsArea = {
       show: false
     }
   },
-  colors: ["#546E7A"],
+  colors: ["#546E7A", "#FFAAAA"],
   stroke: {
     width: 3
   },
@@ -37,50 +37,42 @@ const chartOptionsArea = {
     type: "datetime"
   }
 }
-const chartOptionsBrush = {
-  chart: {
-    id: "chartBrush",
-    brush: {
-      target: "chartArea",
-      enabled: true
-    },
-    selection: {
-      enabled: true,
-      xaxis: {
-        min: new Date("19 Jun 2017").getTime(),
-        max: new Date("14 Aug 2017").getTime()
-      }
-    }
-  },
-  colors: ["#008FFB"],
-  fill: {
-    gradient: {
-      enabled: true,
-      opacityFrom: 0.91,
-      opacityTo: 0.1
-    }
-  },
-  xaxis: {
-    type: "datetime",
-    tooltip: {
-      enabled: false
-    }
-  },
-  yaxis: {
-    tickAmount: 2
-  }
-}
 
-const series = ref([
+const series = [
   {
     data: generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(),
-      20,
+      900,
       {
         min: 30,
         max: 90
       })
-  }
-])
+  },
+  {
+    data: generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(),
+      900,
+      {
+        min: 30,
+        max: 90
+      })
+  },
+]
+
+const filteredSeries = computed(() => {
+  return series.map((v) => {
+    const f = v.data.slice(range.value.min, range.value.max)
+    return { data: f }
+  })
+})
+
+const range = ref({ min: 0, max: 899 })
+
+onMounted(() => {
+  console.log(new Date().getTime() / 1000)
+})
+
+
+
+
 function generateDayWiseTimeSeries(baseval, count, yrange) {
   var i = 0;
   var series = [];
@@ -91,7 +83,7 @@ function generateDayWiseTimeSeries(baseval, count, yrange) {
       yrange.min;
 
     series.push([x, y]);
-    baseval += 86400000;
+    baseval += 2000;
     i++;
   }
 
@@ -99,26 +91,12 @@ function generateDayWiseTimeSeries(baseval, count, yrange) {
 }
 </script>
 
-<style scoped>
-#chart1,
-#chart2 {
-  max-width: 650px;
-  margin: 35px auto;
-}
+<style lang="scss" scoped>
+.chart-group-container {
+  padding: 20px;
 
-#chart2 {
-  position: relative;
-  margin-top: -70px;
-  margin-bottom: 0px;
-}
-
-#app {
-  padding-top: 20px;
-  padding-left: 10px;
-  background: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.1);
-  max-width: 650px;
-  margin: 35px auto;
+  .slider-container {
+    padding: 0 12px 20px 40px;
+  }
 }
 </style>
