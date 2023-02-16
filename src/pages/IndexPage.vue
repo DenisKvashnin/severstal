@@ -7,8 +7,6 @@
       <div>Давление масла <q-icon size="30px" name="compress"></q-icon></div>
       <div>Предупреждение <q-icon size="30px" color="primary" name="warning"></q-icon></div>
       <div>Авария <q-icon size="30px" color="accent" name="warning"></q-icon></div>
-      <q-space />
-      <q-btn icon="notification_important" size="20px" flat round style="margin-right: -6px;" color="primary"></q-btn>
     </q-card>
     <div class="row wrap justify-center">
       <div class="row q-ma-md">
