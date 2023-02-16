@@ -2,10 +2,13 @@
   <q-layout view="hHh lpr lFf" class="main-layout-container">
     <q-header style="backgroundColor:white" elevated>
       <q-toolbar>
+
         <q-btn v-if="router.currentRoute.value.path === '/trends'" flat dense size="20px" color="primary" round
           icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-        <q-space v-if="router.currentRoute.value.path === '/trends'" />
-        <img src="~assets/evraz-logo.svg" style="width: 200px; height: 100%" />
+        <q-btn v-else outlined color="primary" size="14px" @click="router.push({ path: '/trends' })">К трендам</q-btn>
+        <q-space />
+
+        <img src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo" />
         <q-space />
         <div v-if="router.currentRoute.value.path !== '/auth'" class="row items-center">
           <div style="font-size:20px;color:black;">
@@ -54,5 +57,15 @@ function toggleLeftDrawer() {
 <style scoped lang="scss">
 .main-layout-container {
   background-color: $background1;
+}
+</style>
+<style>
+.evraz-logo {
+  width: 200px;
+  height: 100%;
+}
+
+.evraz-logo :hover {
+  cursor: pointer;
 }
 </style>

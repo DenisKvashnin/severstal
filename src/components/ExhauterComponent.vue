@@ -2,12 +2,12 @@
   <q-card style="height:min-content">
     <q-card-section class="bg-secondary text-white row">
       <div class="text-h6 q-mr-md">Эксгаустер что-то там</div>
-      <q-btn color="primary" style="font-weight: 600;"> перейти</q-btn>
+      <q-btn color="primary" @click="router.push({ path: `/exhauster/${id}` })" style="font-weight: 600;">
+        перейти</q-btn>
     </q-card-section>
     <q-card-section class="row items-center justify-around">
       <div class="text-h6"> Ротор № 35к</div>
       <q-chip>22.2.2222</q-chip>
-      <div><a>изменить</a></div>
     </q-card-section>
     <q-card-section>
       <div class="text-h8 q-pl-md q-mb-sm">
@@ -38,6 +38,15 @@
   </q-card>
 </template>
 <script setup>
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const props = defineProps({
+  id: {
+    required: true,
+  }
+})
 </script>
 <style lang="scss" scoped>
 .warning {

@@ -1,10 +1,43 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="exhauter-group-wrapper">
-      <div class="exhauter-group-header">Агломашина 23</div>
-      <div class="exhauter-group">
-        <Exhauter />
-        <Exhauter />
+  <q-page>
+    <q-card class="hint-group">
+      <div>Температура <q-icon size="30px" name="thermostat"></q-icon></div>
+      <div>Вибрация <q-icon style="margin-left:3px" size="30px" name="sensors"></q-icon></div>
+      <div>Уровень масла <q-icon size="30px" name="opacity"></q-icon></div>
+      <div>Давление масла <q-icon size="30px" name="compress"></q-icon></div>
+      <div>Предупреждение <q-icon size="30px" color="primary" name="warning"></q-icon></div>
+      <div>Авария <q-icon size="30px" color="accent" name="warning"></q-icon></div>
+      <q-space />
+      <q-btn icon="notification_important" size="20px" flat round style="margin-right: -6px;" color="primary"></q-btn>
+    </q-card>
+    <div class="row wrap justify-center">
+      <div class="row q-ma-md">
+        <div class="exhauter-group-wrapper">
+          <div class="exhauter-group-header">Агломашина 23</div>
+          <div class="exhauter-group">
+            <Exhauter id="1" />
+            <Exhauter id="4" />
+            <Exhauter id="2" />
+          </div>
+        </div>
+      </div>
+      <div class="row q-ma-md">
+        <div class="exhauter-group-wrapper">
+          <div class="exhauter-group-header">Агломашина 23</div>
+          <div class="exhauter-group">
+            <Exhauter id="1" />
+            <Exhauter id="2" />
+          </div>
+        </div>
+      </div>
+      <div class="row q-ma-md">
+        <div class="exhauter-group-wrapper">
+          <div class="exhauter-group-header">Агломашина 23</div>
+          <div class="exhauter-group">
+            <Exhauter id="1" />
+            <Exhauter id="2" />
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
@@ -19,6 +52,7 @@ import Exhauter from "../components/ExhauterComponent.vue"
   border-radius: 12px;
   border: 3px solid $primary;
   padding: 0 8px 8px 8px;
+  height: min-content;
 
   .exhauter-group-header {
     display: flex;
@@ -37,10 +71,25 @@ import Exhauter from "../components/ExhauterComponent.vue"
     }
 
     & :last-child {
-      margin-right: 0px !important;
+      margin-right: 0px;
     }
 
   }
 
+
+}
+
+.hint-group {
+  display: flex !important;
+  height: 40px;
+  align-items: center;
+  margin: 16px;
+
+  &>* {
+    align-items: center;
+    margin: 0 24px 0 8px;
+    font-size: 16px;
+    display: flex;
+  }
 }
 </style>
