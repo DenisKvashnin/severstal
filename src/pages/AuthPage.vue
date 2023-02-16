@@ -15,10 +15,6 @@
           <q-btn type="submit" unelevated rounded color="primary" class="button">
             Продолжить
           </q-btn>
-          <div class="separator"><span>Или</span></div>
-          <q-btn outline rounded color="primary" @click="loginUser('predictodemo', 'predictodemo')" class="button">
-            Войти как гость
-          </q-btn>
         </div>
       </q-form>
     </div>
@@ -28,7 +24,7 @@
 
 <script setup>
 import { useUserStore } from "src/stores/user"
-import { reactive, ref, nextTick } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from 'vue-router'
 
 const userStorage = useUserStore()
@@ -78,6 +74,7 @@ async function loginUser(login, pass) {
     margin-top: 24px;
 
     .button {
+      margin-top: 20px;
       width: 320px;
       height: 64px;
       border-radius: 54px;
