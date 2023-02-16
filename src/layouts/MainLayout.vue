@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpr lFf" class="main-layout-container">
-    <q-header style="backgroundColor:white" elevated>
+    <q-header v-if="router.currentRoute.value.path !== '/auth'" style="backgroundColor:white" elevated>
       <q-toolbar>
         <div v-if="router.currentRoute.value.path === '/trends'" style="width:182px">
           <q-btn flat dense size="24px" style="margin-left:-7px" color="primary" round icon="menu" aria-label="Menu"
