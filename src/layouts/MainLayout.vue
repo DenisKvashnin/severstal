@@ -7,6 +7,7 @@
             @click="leftDrawerOpen = !leftDrawerOpen" />
         </div>
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
+
         <q-space />
         <q-icon class="text-accent notification_icon cursor-pointer"
           @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
