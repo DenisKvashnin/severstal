@@ -1,7 +1,11 @@
 <template>
   <q-page style="font-family: Arial, Helvetica, sans-serif;">
-    <div>
-
+    <div class="second-header">
+      <q-space />
+      <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
+      <q-checkbox size="30px" keep-color v-model="sortings.orange" label="Предупреждение" color="primary" />
+      <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
+      <q-space />
     </div>
     <q-btn class="question-btn" dense rounded size="24px" unelevated icon="help">
       <q-menu :offset="[-56, -5]" auto-close anchor="top left" style="white-space: nowrap;;overflow-y: hidden;">
@@ -14,7 +18,6 @@
           <div>Авария <q-icon size="24px" color="accent" name="warning"></q-icon></div>
         </div>
       </q-menu>
-
     </q-btn>
     <div class="row wrap justify-center">
       <Aglomachine />
@@ -26,7 +29,11 @@
 import { onMounted, ref, nextTick } from "vue";
 import Aglomachine from "../components/AglomachineComponent.vue"
 
-const el1 = ref(null)
+const sortings = ref({
+  red: false,
+  yellow: false,
+  green: false
+})
 onMounted(() => {
   nextTick(() => {
     document
@@ -42,7 +49,11 @@ onMounted(() => {
 }
 
 .second-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 56px;
+  background-color: white;
 }
 
 .hint-group {
