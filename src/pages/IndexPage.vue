@@ -26,19 +26,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick } from "vue";
+import { ref } from "vue";
 import Aglomachine from "../components/AglomachineComponent.vue"
-
 const sortings = ref({
   red: false,
   yellow: false,
   green: false
-})
-onMounted(() => {
-  nextTick(() => {
-    document
-  })
-
 })
 </script>
 
