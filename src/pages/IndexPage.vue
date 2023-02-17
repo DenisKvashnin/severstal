@@ -2,9 +2,11 @@
   <q-page style="font-family: Arial, Helvetica, sans-serif;">
     <div class="second-header">
       <q-space />
-      <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
-      <q-checkbox size="30px" keep-color v-model="sortings.orange" label="Предупреждение" color="primary" />
-      <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
+      <div class="agenda">
+        <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
+        <q-checkbox size="30px" keep-color v-model="sortings.orange" label="Предупреждение" color="primary" />
+        <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
+      </div>
       <q-space />
       <q-btn class="question-btn q-mr-xl" dense rounded size="18px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left" style="white-space: nowrap;;overflow-y: hidden;">
@@ -64,5 +66,14 @@ const sortings = ref({
     font-size: 12px;
     display: flex;
   }
+}
+
+.agenda{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
 }
 </style>

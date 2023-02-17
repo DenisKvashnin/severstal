@@ -15,6 +15,10 @@
           <q-btn type="submit" unelevated rounded color="primary" class="button">
             Продолжить
           </q-btn>
+          <div class="separator"><span>Или</span></div>
+          <q-btn outline rounded color="primary" @click="loginUser('predictodemo', 'predictodemo')" class="button">
+            Войти как гость
+          </q-btn>
         </div>
       </q-form>
     </div>
