@@ -2,7 +2,7 @@
   <q-card style="height:min-content">
     <div class="card-header weight-3" :class="headerClass">
       <q-icon size="24px" class="text-accent" name="warning"></q-icon>
-      <div class="exhghauster_name">
+      <div class="exhghauster_name" style="padding-left: 10px">
         Эксгаустер {{ props.exhghauster.name }}
       </div>
       <div class="row">
