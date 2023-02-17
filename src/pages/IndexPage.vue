@@ -3,7 +3,7 @@
     <div class="second-header">
       <q-space />
       <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
-      <q-checkbox size="30px" keep-color v-model="sortings.orange" label="Предупреждение" color="primary" />
+      <q-checkbox size="30px" keep-color v-model="sortings.yellow" label="Предупреждение" color="primary" />
       <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
       <q-space />
       <q-btn class="question-btn q-mr-xl" dense rounded size="18px" unelevated icon="help">
