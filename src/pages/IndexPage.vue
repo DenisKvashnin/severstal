@@ -2,17 +2,11 @@
   <q-page style="font-family: Arial, Helvetica, sans-serif;">
     <div class="second-header">
       <q-space />
-<<<<<<< HEAD
-      <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
-      <q-checkbox size="30px" keep-color v-model="sortings.yellow" label="Предупреждение" color="primary" />
-      <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
-=======
       <div class="agenda">
         <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
         <q-checkbox size="30px" keep-color v-model="sortings.orange" label="Предупреждение" color="primary" />
         <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
       </div>
->>>>>>> 80893e5fc49aab8794ad4a1fba0f1e525baf9c6e
       <q-space />
       <q-btn class="question-btn q-mr-xl" dense rounded size="18px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left" style="white-space: nowrap;;overflow-y: hidden;">
