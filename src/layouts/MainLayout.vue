@@ -1,33 +1,17 @@
 <template>
   <q-layout view="hHh lpr lFf" class="main-layout-container">
     <q-header v-if="router.currentRoute.value.path !== '/auth'" style="backgroundColor:white" elevated>
-      <q-toolbar>
+      <q-toolbar style="height:54px">
         <div v-if="router.currentRoute.value.path === '/trends'" style="width:182px">
           <q-btn flat dense size="24px" style="margin-left:-7px" color="primary" round icon="menu" aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen" />
         </div>
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo" />
-        <!-- <q-btn v-if="router.currentRoute.value.path === '/'" outlined color="primary" size="14px"
-          @click="router.push({ path: '/trends' })">К трендам</q-btn> -->
         <q-space />
-        <div class="row">
-          <q-tabs v-model="tab" class="text-black">
-            <q-tab @click="router.push({ path: '/trends' })" name="/trends" icon="query_stats" label="тренды" />
-            <q-tab @click="router.push({ path: '/' })" name="/" icon="home" label="главная" />
-          </q-tabs>
-          <q-tabs indicator-color="transparent" class="text-black">
-            <q-tab icon="notification_important" @click="notificationDrawerOpen = !notificationDrawerOpen"
-              label="оповещения" />
-          </q-tabs>
-        </div>
-        <q-space />
-        <div v-if="router.currentRoute.value.path !== '/auth'" style="width:200px" class="row items-center justify-end">
-          <div style="font-size:20px;color:black;">
-            {{ userStorage.user.username }}
-          </div>
-          <q-btn flat dense size="20px" color="primary" round icon="logout" aria-label="Menu"
-            @click="router.push({ path: '/auth' })" />
-        </div>
+        <q-icon class="text-accent" size="32px" name="notification_important" />
+        <q-btn @click="router.push({ path: '/auth' })" class="text-black weight-1" style="margin-left:10px">
+          {{ userStorage.user.username }}
+        </q-btn>
       </q-toolbar>
 
     </q-header>
@@ -87,7 +71,8 @@ const notificationDrawerOpen = ref(false)
 <style>
 .evraz-logo {
   width: 200px;
-  height: 100%;
+  height: 22px;
+  margin-left: -10px;
 }
 
 .evraz-logo :hover {

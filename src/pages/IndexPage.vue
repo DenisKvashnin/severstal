@@ -1,92 +1,62 @@
 <template>
-  <q-page>
-    <q-card class="hint-group">
-      <div>Температура <q-icon size="30px" name="thermostat"></q-icon></div>
-      <div>Вибрация <q-icon style="margin-left:3px" size="30px" name="sensors"></q-icon></div>
-      <div>Уровень масла <q-icon size="30px" name="opacity"></q-icon></div>
-      <div>Давление масла <q-icon size="30px" name="compress"></q-icon></div>
-      <div>Предупреждение <q-icon size="30px" color="primary" name="warning"></q-icon></div>
-      <div>Авария <q-icon size="30px" color="accent" name="warning"></q-icon></div>
-    </q-card>
+  <q-page style="font-family: Arial, Helvetica, sans-serif;">
+    <div>
+
+    </div>
+    <q-btn class="question-btn" dense rounded size="24px" unelevated icon="help">
+      <q-menu :offset="[-56, -5]" auto-close anchor="top left" style="white-space: nowrap;;overflow-y: hidden;">
+        <div class="hint-group">
+          <div>Температура <q-icon size="24px" name="thermostat"></q-icon></div>
+          <div>Вибрация <q-icon style="margin-left:3px" size="24px" name="sensors"></q-icon></div>
+          <div>Уровень масла <q-icon size="24px" name="opacity"></q-icon></div>
+          <div>Давление масла <q-icon size="24px" name="compress"></q-icon></div>
+          <div>Предупреждение <q-icon size="24px" color="primary" name="warning"></q-icon></div>
+          <div>Авария <q-icon size="24px" color="accent" name="warning"></q-icon></div>
+        </div>
+      </q-menu>
+
+    </q-btn>
     <div class="row wrap justify-center">
-      <div class="row q-ma-md">
-        <div class="exhauter-group-wrapper">
-          <div class="exhauter-group-header">Агломашина 23</div>
-          <div class="exhauter-group">
-            <Exhauter id="1" />
-            <Exhauter id="4" />
-            <Exhauter id="2" />
-          </div>
-        </div>
-      </div>
-      <div class="row q-ma-md">
-        <div class="exhauter-group-wrapper">
-          <div class="exhauter-group-header">Агломашина 23</div>
-          <div class="exhauter-group">
-            <Exhauter id="1" />
-            <Exhauter id="2" />
-          </div>
-        </div>
-      </div>
-      <div class="row q-ma-md">
-        <div class="exhauter-group-wrapper">
-          <div class="exhauter-group-header">Агломашина 23</div>
-          <div class="exhauter-group">
-            <Exhauter id="1" />
-            <Exhauter id="2" />
-          </div>
-        </div>
-      </div>
+      <Aglomachine />
     </div>
   </q-page>
 </template>
 
 <script setup>
-import Exhauter from "../components/ExhauterComponent.vue"
+import { onMounted, ref, nextTick } from "vue";
+import Aglomachine from "../components/AglomachineComponent.vue"
+
+const el1 = ref(null)
+onMounted(() => {
+  nextTick(() => {
+    document
+  })
+
+})
 </script>
 
 <style lang = "scss" scoped>
-.exhauter-group-wrapper {
-  border-radius: 12px;
-  border: 3px solid $primary;
-  padding: 0 8px 8px 8px;
-  height: min-content;
+.question-btn {
+  position: fixed;
+  right: 0;
+}
 
-  .exhauter-group-header {
-    display: flex;
-    justify-content: center;
-    font-size: 24px;
-
-  }
-
-  .exhauter-group {
-    display: flex;
-    flex-direction: row;
-
-
-    &>* {
-      margin-right: 6px;
-    }
-
-    & :last-child {
-      margin-right: 0px;
-    }
-
-  }
-
-
+.second-header {
+  height: 56px;
 }
 
 .hint-group {
   display: flex !important;
-  height: 40px;
   align-items: center;
-  margin: 16px;
+
+  & :last-child {
+    margin-right: 4px;
+  }
 
   &>* {
     align-items: center;
-    margin: 0 24px 0 8px;
-    font-size: 16px;
+    margin: 4px 24px 4px 8px;
+    font-size: 12px;
     display: flex;
   }
 }

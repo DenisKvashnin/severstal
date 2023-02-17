@@ -9,7 +9,7 @@ const routes = [
         path: "/exhauster/:id",
         component: () => import("pages/ExhausterPage.vue"),
       },
-      { path: "/trends", component: () => import("pages/TrendsPage.vue") },
+      { path: "/trends/:id", component: () => import("pages/TrendsPage.vue") },
     ],
   },
 

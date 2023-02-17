@@ -1,59 +1,205 @@
 <template>
   <q-card style="height:min-content">
-    <q-card-section class="bg-secondary text-white row">
-      <div class="text-h6 q-mr-md">Эксгаустер что-то там</div>
-      <q-btn color="primary" @click="router.push({ path: `/exhauster/${id}` })" style="font-weight: 600;">
-        перейти</q-btn>
-    </q-card-section>
-    <q-card-section class="row items-center justify-around">
-      <div class="text-h6"> Ротор № 35к</div>
-      <q-chip>22.2.2222</q-chip>
-    </q-card-section>
-    <q-card-section>
-      <div class="text-h8 q-pl-md q-mb-sm">
-        Последняя замена ротера: {{}} сут.
+    <div class="card-header weight-3" :class="headerClass">
+      <q-icon size="24px" class="text-accent" name="warning"></q-icon>
+      <div>
+        Эксгаустер {{ props.exhghauster.name }}
       </div>
-      <div class="text-h8 q-pl-md q-mb-sm">
-        Последняя замена ротера: {{}} сут.
+      <div class="row">
+        <button icon="arrow_forward" @click="router.push({ path: `trends/${props.id}` })" class="card-link-btn shadow-1">
+          <q-icon size="20px" name="query_stats" />
+        </button>
+        <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.id}` })"
+          class="card-link-btn shadow-1">
+          <q-icon size="20px" name="chevron_right" />
+        </button>
       </div>
-      <q-expansion-item expand-separator label="Предупреждение">
-        <q-card>
-          <q-card-section>
-            <div class="warning">
-              1232414122
-            </div>
-          </q-card-section>
-        </q-card>
+    </div>
+    <div class="card-main">
+      <div class="row items-center q-mb-sm">
+        <div class="weight-2 q-mr-xs">
+          Ротор № {{ props.exhghauster.rotor.number }}
+        </div>
+        <q-chip
+          style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+      </div>
+      <div class="weight-1 q-py-sm"
+        style="border-top: 1px solid rgb(220,220,220);border-bottom: 1px solid rgb(220,220,220);">
+        <div class="weight-3 q-mb-sm q-mx-md">Последняя замена ротора</div>
+        <div class="row rounded-borders" style="background-color: #FAFAFA;">
+          <div style="width:30px"></div>
+          <q-chip class="date-chip weight-3">
+            {{ props.exhghauster.rotor.lastDate }} сут
+          </q-chip>
+          <div style="opacity:0.7;font-size: 12px;" class="column q-ml-sm items-center justify-center">
+            <div>Прогноз</div>
+            <div class="weight-3">{{ props.exhghauster.rotor.lastDate }} сут</div>
+          </div>
+        </div>
+      </div>
+      <q-img src="~assets/scheme-rotor.svg" width="260px" />
+      <q-expansion-item header-class="card-expansion-item weight-3" dense label="Предупреждение">
+        <q-list style="font-size: 13px !important;">
+          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs warning q-ml-sm">
+            <q-item-section class="q-my-none">
+              {{ }}Ошибка
+            </q-item-section>
+            <q-item-section class="items-end q-my-none">
+              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
+            </q-item-section>
+          </q-item>
+          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs warning q-ml-sm">
+            <q-item-section class="q-my-none">
+              {{ }}Ошибка
+            </q-item-section>
+            <q-item-section class="items-end q-my-none">
+              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </q-expansion-item>
-      <q-expansion-item expand-separator label="Все что-то там">
-        <q-card>
-          <q-card-section>
-            <div class="warning">
-              1232414122
-            </div>
-          </q-card-section>
-        </q-card>
+      <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
+        <q-list style="font-size: 13px !important;">
+          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs warning q-ml-sm">
+            <q-item-section class="q-my-none">
+              {{ }}Ошибка
+            </q-item-section>
+            <q-item-section class="items-end q-my-none">
+              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
+            </q-item-section>
+          </q-item>
+          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs danger q-ml-sm">
+            <q-item-section>
+              {{ }}Ошибка
+            </q-item-section>
+            <q-item-section class="items-end">
+              <q-chip class="damage-chip danger-chip" icon="sensors"></q-chip>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </q-expansion-item>
-    </q-card-section>
+    </div>
   </q-card>
 </template>
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router';
+
+const headerClass = ref('danger')
 
 const router = useRouter()
 const props = defineProps({
-  id: {
-    required: true,
+  id: String || Number,
+  exhghauster: {
+    required: false,
+    default: {
+      name: 'У-113',
+      rotor: {
+        date: '17.02.2012',
+        number: '12K',
+        lastDate: 3,
+        estimatedDate: 10
+      }
+    }
   }
 })
 </script>
 <style lang="scss" scoped>
+.card-header {
+  height: 40px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 14px;
+  font-weight: 600;
+  background-color: v-bind(headerBgColor);
+
+
+
+  & :first-child {
+    margin-right: 4px;
+  }
+}
+
+
+.card-main {
+  padding: 10px 12px 10px 12px;
+
+  .date-chip {
+    background-color: #F4F4F4;
+    border-radius: 4px;
+    margin: 10px 0 10px 0;
+    font-size: 12px;
+  }
+
+  .card-expansion {
+    padding: 0
+  }
+}
+
+.damage-chip {
+  width: min-content;
+  height: min-content;
+  padding: 5px 3px 5px 11px;
+  margin: 0;
+  border-radius: 6px;
+  border: 1px solid;
+}
+
+.danger {
+  background-color: $danger;
+}
+
+.positive {
+  background-color: $positive;
+  color: white;
+}
+
 .warning {
-  padding: 4px;
-  font-size: 16px;
-  background-color: #FAFAFA;
-  margin-bottom: 4px;
+  background-color: $warning;
+}
+
+.danger-chip {
+  background-color: #FCDBCB;
+  border: 1px solid $accent;
+  color: $accent;
+}
+
+.warning-chip {
+  background-color: #FEF1DB;
+  border: 1px solid $warning-accent;
+  color: $warning-accent !important;
+}
+</style>
+
+<style lang="scss">
+.card-link-btn {
+  padding: 0;
+  height: 26px;
+  width: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FAFAFA;
+  border: 1px solid #EAEAEA;
   border-radius: 4px;
+
+  & :hover {
+    cursor: pointer;
+  }
+}
+
+.q-chip__icon {
+  color: inherit
+}
+
+.q-item {
+  min-height: 32px;
+}
+
+.card-expansion-item {
+  padding: 0 2px 0 2px;
+  justify-content: space-between !important;
 }
 </style>
