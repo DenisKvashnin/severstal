@@ -23,7 +23,7 @@
       </q-btn>
     </div>
     <div class="row wrap justify-center">
-      <Aglomachine />
+      <Aglomachine v-for="machine in machines" :exhausters="machine.aspirators" :name="machine.name" :key="machine.id" />
     </div>
   </q-page>
 </template>
@@ -39,8 +39,10 @@ const sortings = ref({
   yellow: false,
   green: false
 })
+const machines = ref([])
 onMounted(async () => {
-  console.log(await ExhausterService.getMachines())
+  machines.value = (await ExhausterService.getMachines()).sinter_machines
+  console.log(machines.value)
 })
 </script>
 

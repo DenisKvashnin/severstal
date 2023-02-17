@@ -3,7 +3,7 @@
     <div class="card-header weight-3" :class="headerClass">
       <q-icon size="24px" class="text-accent" name="warning"></q-icon>
       <div class="exhghauster_name" style="padding-left: 10px">
-        Эксгаустер {{ props.exhghauster.name }}
+        {{ props.data.name }}
       </div>
       <div class="row">
         <button icon="arrow_forward" @click="router.push({ path: `trends/${props.id}` })" class="card-link-btn shadow-1">
@@ -21,8 +21,8 @@
           Ротор № {{ props.exhghauster.rotor.number }}
         </div>
         <div style="padding-left: 42.5%">
-        <q-chip
-          style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+          <q-chip
+            style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
         </div>
       </div>
       <div class="weight-1 q-py-sm"
@@ -62,21 +62,14 @@
         </q-list>
       </q-expansion-item>
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
-        <q-list style="font-size: 13px !important;">
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs warning q-ml-sm">
+        <q-list v-for="bearing in data.sensors_payload.bearings" :key="bearing.device_kind"
+          style="font-size: 13px !important;">
+          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
             <q-item-section class="q-my-none">
-              {{ }}Ошибка
+              {{ bearing.device_kind.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
               <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
-            </q-item-section>
-          </q-item>
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs danger q-ml-sm">
-            <q-item-section>
-              {{ }}Ошибка
-            </q-item-section>
-            <q-item-section class="items-end">
-              <q-chip class="damage-chip danger-chip" icon="sensors"></q-chip>
             </q-item-section>
           </q-item>
         </q-list>
@@ -85,14 +78,14 @@
   </q-card>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, watch, onUpdated, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 
 const headerClass = ref('danger')
 
 const router = useRouter()
 const props = defineProps({
-  id: String || Number,
+  data: Object,
   exhghauster: {
     required: false,
     default: {
@@ -106,6 +99,30 @@ const props = defineProps({
     }
   }
 })
+
+onMounted(() => {
+  console.log(proccessBearings())
+})
+
+function proccessBearings() {
+  const colors = []
+  props.data.sensors_payload.bearings.forEach((b) => {
+
+    const tempretureStatus = b.signal_values.find((v) => v.signal_kind_code === "temperature").status
+    colors.push(['tempreture', tempretureStatus, b.device_kind.name])
+    const vibrationEls = b.signal_values.map((v) => {
+      if (v.signal_kind_code === 'vibration_horizontal' || v.signal_kind_code === 'vibration_vertical' || v.signal_kind_code === 'vibration_axial') {
+        return 1
+      }
+      return 0
+    })
+    const vibrationStatus = vibrationEls.every((v) => {
+
+    })
+    colors.push(['vibration', vibrationStatus, b.device_kind.name])
+  })
+  return colors
+}
 </script>
 <style lang="scss" scoped>
 .card-header {
@@ -206,12 +223,12 @@ const props = defineProps({
   justify-content: space-between !important;
 }
 
-.arrow_forward_btn{
+.arrow_forward_btn {
   align-items: flex-start;
   padding: 0px;
 }
 
-.exhghauster_name{
+.exhghauster_name {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -221,7 +238,7 @@ const props = defineProps({
   height: 24px;
 }
 
-.rotor-img{
+.rotor-img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
