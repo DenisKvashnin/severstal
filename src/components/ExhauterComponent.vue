@@ -20,8 +20,10 @@
         <div class="weight-2 q-mr-xs">
           Ротор № {{ props.exhghauster.rotor.number }}
         </div>
+        <div style="padding-left: 42.5%">
         <q-chip
           style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+        </div>
       </div>
       <div class="weight-1 q-py-sm"
         style="border-top: 1px solid rgb(220,220,220);border-bottom: 1px solid rgb(220,220,220);">
