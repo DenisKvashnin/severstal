@@ -7,7 +7,7 @@ export default class AuthorArticleService {
       .catch((err) => {
         return err;
       });
-    return response;
+    return response.data;
   }
 
   static async getExhauserStatById(id) {

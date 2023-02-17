@@ -1,9 +1,9 @@
 <template>
   <div class="row q-ma-md">
     <div class="exhauter-group-wrapper">
-      <div class="exhauter-group-header">Агломашина 23</div>
+      <div class="exhauter-group-header">{{ props.name }}</div>
       <div class="exhauter-group">
-        <Exhauter v-for="i in props.exhausters" :id="i.id" :key="i.id" />
+        <Exhauter v-for="i in props.exhausters" :data="i" :key="i.name" />
       </div>
     </div>
   </div>
@@ -16,7 +16,8 @@ const props = defineProps({
   exhausters: {
     required: false,
     default: [{ id: '1' }, { id: '2' }]
-  }
+  },
+  name: String
 })
 </script>
 <style lang="scss" scoped>
