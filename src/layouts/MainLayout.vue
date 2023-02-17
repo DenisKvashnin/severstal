@@ -8,11 +8,11 @@
         </div>
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo" />
         <q-space />
-        <q-icon class="text-accent" size="32px" name="notification_important" />
-        <q-btn @click="router.push({ path: '/auth' })" class="text-black weight-1" style="margin-left:10px">
-          {{ userStorage.user.username }}
-        </q-btn>
-      </q-toolbar>
+        <q-icon class="text-accent notification_icon" size="26px" name="notification_important" />
+        <div class="q-pa-md q-gutter-sm">
+          <q-avatar @click="router.push({ path: '/auth' })" class="text-black weight-1" style="margin-left:10px" rounded color="grey-12" text-color="white"> {{ Array.from(userStorage.user.username)[0].toUpperCase() }}</q-avatar>
+        </div>
+     </q-toolbar>
 
     </q-header>
 
@@ -70,12 +70,28 @@ const notificationDrawerOpen = ref(false)
 </style>
 <style>
 .evraz-logo {
-  width: 200px;
-  height: 22px;
-  margin-left: -10px;
+  position: absolute;
+  width: 132.53px;
+  height: 34px;
+  left: 20px;
+  top: 7px;
+}
+
+.q-header{
+  height: 54px;
 }
 
 .evraz-logo :hover {
   cursor: pointer;
+}
+
+.q-avatar{
+  width: 40px;
+height: 40px;
+}
+
+.notification_icon{
+  width: 33px;
+  height: 24px;
 }
 </style>
