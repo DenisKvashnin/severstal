@@ -2,7 +2,7 @@
   <q-card style="height:min-content">
     <div class="card-header weight-3" :class="headerClass">
       <q-icon size="24px" class="text-accent" name="warning"></q-icon>
-      <div>
+      <div class="exhghauster_name">
         Эксгаустер {{ props.exhghauster.name }}
       </div>
       <div class="row">
@@ -10,8 +10,8 @@
           <q-icon size="20px" name="query_stats" />
         </button>
         <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.id}` })"
-          class="card-link-btn shadow-1">
-          <q-icon size="20px" name="chevron_right" />
+          class="card-link-btn shadow-1 arrow_forward_btn">
+          <q-icon size="26px" name="chevron_right" rounded color="black" />
         </button>
       </div>
     </div>
@@ -37,8 +37,9 @@
           </div>
         </div>
       </div>
-      <q-img src="~assets/scheme-rotor.svg" width="260px" />
-      <q-expansion-item header-class="card-expansion-item weight-3" dense label="Предупреждение">
+      <q-space />
+      <q-img src="~assets/scheme-rotor.svg" class="rotor-img" />
+      <q-expansion-item header-class="card-expansion-item weight-3" dense label="Предупреждение" style="padding-top:10px">
         <q-list style="font-size: 13px !important;">
           <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs warning q-ml-sm">
             <q-item-section class="q-my-none">
@@ -124,7 +125,7 @@ const props = defineProps({
 
 
 .card-main {
-  padding: 10px 12px 10px 12px;
+  padding: 10px 15px 20px 12px;
 
   .date-chip {
     background-color: #F4F4F4;
@@ -201,5 +202,33 @@ const props = defineProps({
 .card-expansion-item {
   padding: 0 2px 0 2px;
   justify-content: space-between !important;
+}
+
+.arrow_forward_btn{
+  align-items: flex-start;
+  padding: 0px;
+}
+
+.exhghauster_name{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+  width: 214px;
+  height: 24px;
+}
+
+.rotor-img{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: #EFF2F6;
+  border: 0.5px solid #CED7E7;
+  border-radius: 6px;
+  flex: none;
+  order: 3;
+  flex-grow: 0;
 }
 </style>
