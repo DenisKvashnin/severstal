@@ -6,9 +6,10 @@
           <q-btn flat dense size="24px" style="margin-left:-7px" color="primary" round icon="menu" aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen" />
         </div>
-        <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo" />
+        <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
         <q-space />
-        <q-icon class="text-accent notification_icon cursor-pointer" size="26px" name="notification_important" />
+        <q-icon class="text-accent notification_icon cursor-pointer"
+          @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
           <q-avatar @click="router.push({ path: '/auth' })" class="text-black weight-1 cursor-pointer"
             style="margin-left:10px" rounded color="grey-12" text-color="white">
@@ -60,7 +61,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const userStorage = useUserStore()
 const leftDrawerOpen = ref(false)
-const tab = ref(router.currentRoute.value.path)
 const notificationDrawerOpen = ref(false)
 </script>
 
