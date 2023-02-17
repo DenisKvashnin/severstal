@@ -8,12 +8,13 @@
         </div>
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo" />
         <q-space />
-        <q-icon class="text-accent notification_icon" size="26px" name="notification_important" />
+        <q-icon class="text-accent notification_icon cursor-pointer" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
-          <q-avatar @click="router.push({ path: '/auth' })" class="text-black weight-1" style="margin-left:10px" rounded color="grey-12" text-color="white"> {{ Array.from(userStorage.user.username)[0].toUpperCase() }}</q-avatar>
+          <q-avatar @click="router.push({ path: '/auth' })" class="text-black weight-1 cursor-pointer"
+            style="margin-left:10px" rounded color="grey-12" text-color="white">
+            {{ Array.from(userStorage.user.username)[0].toUpperCase() }}</q-avatar>
         </div>
-     </q-toolbar>
-
+      </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" bordered>
@@ -29,8 +30,8 @@
         </q-item>
       </q-list>
     </q-drawer>
-    <q-drawer v-model="notificationDrawerOpen" side="right"
-      style="box-shadow: -4px 2px 10px 2px rgb(0 0 0 / 20%) inset;" overlay bordered>
+    <q-drawer v-model="notificationDrawerOpen" side="right" style="box-shadow: -4px 2px 10px 2px rgb(0 0 0 / 20%) inset;"
+      overlay bordered>
       <q-list>
         <q-item-label header>
           lol
@@ -77,7 +78,7 @@ const notificationDrawerOpen = ref(false)
   top: 7px;
 }
 
-.q-header{
+.q-header {
   height: 54px;
 }
 
@@ -85,12 +86,12 @@ const notificationDrawerOpen = ref(false)
   cursor: pointer;
 }
 
-.q-avatar{
+.q-avatar {
   width: 40px;
-height: 40px;
+  height: 40px;
 }
 
-.notification_icon{
+.notification_icon {
   width: 33px;
   height: 24px;
 }
