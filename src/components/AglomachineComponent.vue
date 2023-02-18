@@ -29,7 +29,8 @@ const props = defineProps({
     font-size: 15px;
     border-radius: 5px 5px 0 0;
     margin-bottom: 10px;
-    background-color: $danger;
+    background-color: $secondary;
+    color: white;
     padding: 10px 0 10px 16px;
   }
 

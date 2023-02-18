@@ -14,8 +14,8 @@
           <div class="hint-group" style="padding-top: 8px;">
             <div>Температура <q-icon size="24px" name="thermostat" class="agenda-tips"></q-icon></div>
             <div>Вибрация <q-icon style="margin-left:3px" size="24px" name="sensors" class="agenda-tips"></q-icon></div>
-            <div>Уровень масла <q-icon size="24px" name="opacity" class="agenda-tips"></q-icon></div>
-            <div>Давление масла <q-icon size="24px" name="compress" class="agenda-tips"></q-icon></div>
+            <div>Уровень жидкости <q-icon size="24px" name="opacity" class="agenda-tips"></q-icon></div>
+            <div>Давление <q-icon size="24px" name="compress" class="agenda-tips"></q-icon></div>
             <div>Предупреждение <q-icon size="24px" color="primary" name="warning" class="agenda-tips"></q-icon></div>
             <div>Авария <q-icon size="24px" color="accent" name="warning" class="agenda-tips"></q-icon></div>
           </div>
@@ -30,10 +30,11 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import Aglomachine from "../components/AglomachineComponent.vue"
 import ExhausterService from "../services/ExhausterService"
 
-
+const router = useRoute()
 const sortings = ref({
   red: false,
   yellow: false,
@@ -41,7 +42,7 @@ const sortings = ref({
 })
 const machines = ref([])
 onMounted(async () => {
-  machines.value = (await ExhausterService.getMachines()).sinter_machines
+  machines.value = (await ExhausterService.getMachines(router.query.time_machine_offset)).sinter_machines
 })
 </script>
 

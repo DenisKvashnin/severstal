@@ -1,9 +1,15 @@
 import httpClient from "../clients/exhausterHttpClient";
 
 export default class AuthorArticleService {
-  static async getMachines() {
+  static async getMachines(time_machine_offset = null) {
+    let params;
+    if (time_machine_offset) {
+      params = new URLSearchParams([
+        ["time_machine_offset", time_machine_offset],
+      ]);
+    }
     const response = await httpClient()
-      .get("sinter_machines")
+      .get("sinter_machines", { params })
       .catch((err) => {
         return err;
       });
@@ -16,7 +22,7 @@ export default class AuthorArticleService {
         ["time_machine_offset", time_machine_offset],
       ]);
     }
-    if(id) {
+    if (id) {
       const response = await httpClient()
         .get(`sinter_machines/${id}`)
         .catch((err) => {
@@ -24,6 +30,6 @@ export default class AuthorArticleService {
         });
       return response;
     }
-    return null
+    return null;
   }
 }
