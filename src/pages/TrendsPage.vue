@@ -16,9 +16,9 @@
       <q-expansion-item v-for="bearing in sideMenuData?.bearings" :key="bearing.device_kind.name" expand-separator
         :label="bearing.device_kind.name" :header-inset-level="0.15">
         <q-list style="margin-left: 26px;" v-for="signal in bearing.signal_values" :key="signal.id">
-          <q-item clickable v-ripple class="ite">
-            <q-item-section>
-              <div class="row justify-between full-width">
+          <q-item @click="checkSignalId(signal.id)" clickable v-ripple class="ite">
+            <q-item-section :class="{ 'selected': ids.has(signal.id) }">
+              <div class="row justify-between q-px-xs full-width">
                 <div>{{ signal.signal_kind_code }}</div>
                 <div :class="signal.status">{{ signal.value.toFixed(3) }}</div>
               </div>
@@ -31,9 +31,9 @@
       <q-expansion-item v-for="device in sideMenuData?.other_senors" :key="device.device_kind.name" expand-separator
         :label="device.device_kind.name" :header-inset-level="0.15">
         <q-list style="margin-left: 26px;" v-for="signal in device.signal_values" :key="signal.id">
-          <q-item clickable v-ripple class="ite">
-            <q-item-section>
-              <div class="row justify-between full-width">
+          <q-item @click="checkSignalId(signal.id)" clickable v-ripple class="ite">
+            <q-item-section :class="{ 'selected': ids.has(signal.id) }">
+              <div class="row justify-between q-px-xs full-width">
                 <div>{{ signal.signal_kind_code }}</div>
                 <div :class="signal.status">{{ signal.value.toFixed(3) }}</div>
               </div>
@@ -54,6 +54,14 @@ const ApexArea = defineAsyncComponent(() =>
 )
 const route = useRoute()
 const sideMenuData = ref()
+const ids = ref(new Set())
+function checkSignalId(id) {
+  if (ids.value.has(id)) {
+    ids.value.delete(id)
+  } else {
+    ids.value.add(id)
+  }
+}
 
 onMounted(async () => {
   sideMenuData.value = (await AspiratorService.getAspirator(route.params.id)).data.aspirator.sensors_payload
@@ -75,5 +83,10 @@ onMounted(async () => {
 
 .ok {
   background-color: inherit;
+}
+
+.selected {
+  border-radius: 4px;
+  border: 1px solid $info;
 }
 </style>
