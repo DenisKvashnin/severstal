@@ -8,6 +8,7 @@ export default class AspiratorService {
         ["time_machine_offset", time_machine_offset],
       ]);
     }
+    if(!id) return null
     const response = await httpClient()
       .get(`aspirators/${id}`, { params })
       .catch((err) => {

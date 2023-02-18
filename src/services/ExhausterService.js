@@ -16,11 +16,14 @@ export default class AuthorArticleService {
         ["time_machine_offset", time_machine_offset],
       ]);
     }
-    const response = await httpClient()
-      .get(`sinter_machines/${id}`)
-      .catch((err) => {
-        return err;
-      });
-    return response;
+    if(id) {
+      const response = await httpClient()
+        .get(`sinter_machines/${id}`)
+        .catch((err) => {
+          return err;
+        });
+      return response;
+    }
+    return null
   }
 }
