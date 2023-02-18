@@ -6,10 +6,11 @@
         {{ props.data.name }}
       </div>
       <div class="row">
-        <button icon="arrow_forward" @click="router.push({ path: `trends/${props.id}` })" class="card-link-btn shadow-1">
+        <button icon="arrow_forward" @click="router.push({ path: `trends/${props.data.id}` })"
+          class="card-link-btn shadow-1">
           <q-icon size="20px" name="query_stats" />
         </button>
-        <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.id}` })"
+        <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.data.id}` })"
           class="card-link-btn shadow-1 arrow_forward_btn">
           <q-icon size="26px" name="chevron_right" rounded color="black" />
         </button>
@@ -62,11 +63,14 @@
         </q-list>
       </q-expansion-item>
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
-        <q-list v-for="bearing in data.sensors_payload.bearings" :key="bearing.device_kind"
-          style="font-size: 13px !important;">
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
+        <q-list v-for="bearing in bearingStatus" :key="bearing.name" style="font-size: 13px !important;">
+          <q-item
+            :class="{
+              warning: bearing.overall === 'warning', danger: bearing.overall === 'alarm', positive: bearing.overall === 'ok'
+            }"
+            class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
             <q-item-section class="q-my-none">
-              {{ bearing.device_kind.name }}
+              {{ bearing.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
               <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
@@ -78,11 +82,12 @@
   </q-card>
 </template>
 <script setup>
-import { defineProps, ref, watch, onUpdated, onMounted } from 'vue'
+import { defineProps, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 
 const headerClass = ref('danger')
 
+const bearingStatus = ref([])
 const router = useRouter()
 const props = defineProps({
   data: Object,
@@ -101,27 +106,40 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  console.log(proccessBearings())
+  bearingStatus.value = proccessBearings()
 })
 
 function proccessBearings() {
-  const colors = []
-  props.data.sensors_payload.bearings.forEach((b) => {
-
-    const tempretureStatus = b.signal_values.find((v) => v.signal_kind_code === "temperature").status
-    colors.push(['tempreture', tempretureStatus, b.device_kind.name])
-    const vibrationEls = b.signal_values.map((v) => {
+  const bearings = []
+  props.data.sensors_payload.bearings.forEach((b, i) => {
+    bearings.push({ name: b.device_kind.name, overall: 'ok' })
+    b.signal_values.forEach((v) => {
       if (v.signal_kind_code === 'vibration_horizontal' || v.signal_kind_code === 'vibration_vertical' || v.signal_kind_code === 'vibration_axial') {
-        return 1
+        if (v.status === 'warning' && bearings[i].vibration !== 'alarm') {
+          bearings[i].vibration = 'warning'
+        } else if (v.status === 'alarm') {
+          bearings[i].vibration = 'alarm'
+        } else {
+          bearings[i].vibration = 'ok'
+        }
       }
-      return 0
+      if (v.signal_kind_code === "temperature") {
+        if (v.status === 'warning' && bearings[i].temperature !== 'alarm') {
+          bearings[i].temperature = 'warning'
+        } else if (v.status === 'alarm') {
+          bearings[i].temperature = 'alarm'
+        } else {
+          bearings[i].temperature = 'ok'
+        }
+      }
     })
-    const vibrationStatus = vibrationEls.every((v) => {
-
-    })
-    colors.push(['vibration', vibrationStatus, b.device_kind.name])
+    if (bearings[i].vibration === 'alarm' || bearings[i].temperature === 'alarm') {
+      bearings[i].overall = 'alarm'
+    } else if (bearings[i].vibration === 'warning' || bearings[i].temperature === 'warning') {
+      bearings[i].overall = 'warning'
+    }
   })
-  return colors
+  return bearings
 }
 </script>
 <style lang="scss" scoped>
