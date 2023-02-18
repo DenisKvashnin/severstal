@@ -35,6 +35,9 @@ const chartOptionsArea = {
   },
   xaxis: {
     type: "datetime"
+  },
+  yaxis: {
+    decimalsInFloat: 2
   }
 }
 
@@ -47,7 +50,6 @@ const filteredSeries = computed(() => {
     props.charts.charts.forEach((v) => {
       series.push({ data: v[Object.keys(v)[0]] })
     })
-    console.log(series[0].data.length)
     series.forEach((s, i) => {
       series[i].data = s.data.slice(s.data.length * range.value.min, s.data.length * range.value.max)
     })

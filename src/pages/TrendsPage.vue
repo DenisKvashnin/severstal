@@ -59,8 +59,6 @@ async function checkSignalId(id) {
 
 onMounted(async () => {
   sideMenuData.value = (await AspiratorService.getAspirator(route.params.id)).data.aspirator.sensors_payload
-  console.log(sideMenuData.value)
-
 })
 
 </script>
