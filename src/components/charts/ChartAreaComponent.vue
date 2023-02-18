@@ -20,7 +20,11 @@ const chartOptionsArea = {
       show: false
     }
   },
-  colors: ["#546E7A", "#FFAAAA"],
+  colors: ["#696969", "#2e8b57", "#7f0000", "#191970",
+    "#808000", "#ff0000", "#ff8c00", "#ffff00", "#00ff00",
+    "#ba55d3", "#00fa9a", "#00ffff", "#0000ff", "#ff00ff",
+    "#1e90ff", "#fa8072", "#eee8aa", "#dda0dd", "#ff1493",
+    "#87cefa"],
   stroke: {
     width: 3
   },

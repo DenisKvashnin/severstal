@@ -27,11 +27,14 @@
             {{ props.data.rotor_name }}
           </div>
           <div>
-            <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">17.02.2012</q-chip>
+            <q-chip
+              style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ moment(props.data.rotor_change_date).format("D.MM.YYYY") }}</q-chip>
           </div>
         </div>
-        <div class="weight-1 q-py-sm">
-          Актуальность на:
+        <div class="weight-2 row justify-between q-py-sm">
+          <div>
+            Актуальность на:
+          </div>
           <span>{{ formatDate(props.data?.sensors_payload?.bearings[0]?.signal_values[0]?.batch_time) }}</span>
         </div>
       </div>
@@ -41,7 +44,7 @@
         <div class="row rounded-borders" style="background-color: #FAFAFA;">
           <div style="width:30px"></div>
           <q-chip class="date-chip weight-3">
-            3 сут
+            {{ Math.ceil(((new Date()) - (new Date(props.data.rotor_change_date))) / 86400000) }} сут
           </q-chip>
           <div style="opacity:0.7;font-size: 12px;" class="column q-ml-sm items-center justify-center">
             <div>Прогноз</div>
@@ -88,6 +91,7 @@
 import { defineProps, ref, onMounted, watch, onUpdated } from 'vue'
 import { useRouter } from 'vue-router';
 import { date } from 'quasar'
+import moment from 'moment'
 
 const bearingStatus = ref([])
 const otherStatus = ref([])
@@ -101,6 +105,7 @@ onUpdated(() => {
   otherStatus.value = proccessOtherSignals()
 })
 onMounted(() => {
+  console.log()
   bearingStatus.value = proccessBearings()
   otherStatus.value = proccessOtherSignals()
 })

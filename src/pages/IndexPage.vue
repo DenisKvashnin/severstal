@@ -58,6 +58,7 @@ const filteredMachines = computed(() => {
 
 onMounted(async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
+  console.log(machines.value)
 })
 watch(offsetStore, async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines

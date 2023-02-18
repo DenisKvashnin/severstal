@@ -8,7 +8,7 @@
         :label="bearing.device_kind.name" :header-inset-level="0.15">
         <q-list style="margin-left: 26px;" v-for="signal in bearing.signal_values" :key="signal.id">
           <q-item @click="checkSignalId(signal.signal_kind_id)" clickable v-ripple class="ite">
-            <q-item-section :class="{ 'selected': ids.has(signal.id) }">
+            <q-item-section :class="{ 'selected': ids.has(signal.signal_kind_id) }">
               <div class="row justify-between q-px-xs full-width">
                 <div>{{ signal.signal_kind_short_name }}, {{ signal.signal_kind_dimension }}</div>
                 <div :class="signal.status">{{ signal.value.toFixed(3) }}</div>
@@ -61,14 +61,14 @@ async function checkSignalId(id) {
     sideMenuData.value.bearings.forEach((v) => {
       v.signal_values.forEach((f) => {
         if (id === f.signal_kind_id) {
-          names.push(f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
+          names.push(v.device_kind.name + ' ' + f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
         }
       })
     })
     sideMenuData.value.other_senors.forEach((v) => {
       v.signal_values.forEach((f) => {
         if (id === f.signal_kind_id) {
-          names.push(f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
+          names.push(v.device_kind.name + ' ' + f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
         }
       })
     })
