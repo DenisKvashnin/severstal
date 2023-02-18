@@ -1,26 +1,26 @@
 <template>
   <div style="position: relative;">
 
-    <div style="left:49.6%;top:16%;width:10.19%" class="liquid-measure exgauster-scheme-text">
-      12 %
+    <div style="left:49.6%;top:16%;width:10.19%" class="exgauster-scheme-text">
+      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[oilLevel?.status]" class="grey"/>
     </div>
 
     <div style="left:74.7%;top:30.3%;width: 11.8%" class="liquid-measure exgauster-scheme-text">
-      12 кг/см2
+      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[oilPressure?.status]"/>
     </div>
 
 
-    <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text">
-      {{}}000 °C
+    <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text" :class="[waterAfterCoolerTemp?.status]">
+      {{waterAfterCoolerTemp?.value?.toFixed(2)}} °C
     </div>
-    <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text">
-      {{}}000 °C
+    <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text" :class="[waterBeforeCoolerTemp?.status]">
+      {{waterBeforeCoolerTemp?.value?.toFixed(2)}} °C
     </div>
-    <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text">
-      {{}}000 °C
+    <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text" :class="[coolerBeforeTemp?.status]">
+      {{coolerBeforeTemp?.value?.toFixed(2)}} °C
     </div>
-    <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text">
-      {{}}000 °C
+    <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text" :class="coolerAfterTemp?.status">
+      {{coolerAfterTemp?.value?.toFixed(2)}} °C
     </div>
 
 
@@ -280,8 +280,29 @@ export default {
     },
     statorVoltage: function (){
       return this.otherSenors.filter(s=> s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s=>s.signal_kind_code==="stator_voltage")[0]
-    }
+    },
 
+    coolerBeforeTemp: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_before")[0]
+    },
+    waterBeforeCoolerTemp: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_before")[0]
+    },
+    coolerAfterTemp: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_after" && s.value > 0.00)[0]
+    },
+    waterAfterCoolerTemp: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_after" && s.value < 0.00)[0]
+    },
+    oilLevel: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_level")[0]
+    },
+    oilLevelValue: function (){
+      return oilLevel?.value;
+    },
+    oilPressure: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_pressure")[0]
+    }
   },
 
   methods: {
