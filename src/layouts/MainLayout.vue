@@ -13,8 +13,10 @@
           @click="router.replace({ path: `../trends/${route.params.id}` })" class="card-link-btn shadow-1">
           <q-icon size="30px" name="query_stats" />
         </button>
-        <input style="height:36px" outlined hide-bottom-space class="q-mx-sm" color="primary" v-model="offset" />
-        <q-btn color="primary" @click="offsetStore.setOffset(offset)">установить</q-btn>
+        <div style="width:300px" class="q-mr-md">
+          <q-slider selection-color="grey" @change="setOffsetVal" track-color="primary" v-model="range" :min="353"
+            :max="32566" />
+        </div>
         <q-icon class="text-accent notification_icon cursor-pointer"
           @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
@@ -61,16 +63,21 @@ import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vu
 
 
 const offsetStore = useOffsetStore()
-const offset = ref(offsetStore.offset)
+const range = ref(32566)
 const router = useRouter()
 const route = useRoute()
 const userStorage = useUserStore()
 const notificationDrawerOpen = ref(false)
 
-
+function setOffsetVal(v) {
+  offsetStore.setOffset(v)
+}
 const notificationComponent = defineAsyncComponent(() =>
   import('components/NotificationComponent.vue')
 )
+onMounted(() => {
+  range.value = offsetStore.offset
+})
 const toAdmin = () => {
   window.location.href = "https://evraz-api.kovalev.team/admin/evraz_kafka_datum"
 }
