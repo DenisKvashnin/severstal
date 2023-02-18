@@ -1,7 +1,9 @@
 <template>
   <q-card style="height:min-content">
-    <div class="card-header weight-3" :class="headerClass">
-      <q-icon size="24px" class="text-accent" name="warning"></q-icon>
+    <div class="card-header weight-3" :class="props.data.status">
+      <q-icon size="24px"
+        :class="props.data.status == 'alarm' ? 'text-accent' : props.data.status == 'warning' ? 'warning2' : ''"
+        :name="props.data.status == 'alarm' || props.data.status == 'warning' ? 'warning' : ''"></q-icon>
       <div class="exhghauster_name" style="padding-left: 10px">
         {{ props.data.name }}
       </div>
@@ -22,11 +24,11 @@
           {{ props.data.rotor_name }}
         </div>
         <div style="padding-left: 42.5%">
-          <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+          <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">17.02.2012</q-chip>
         </div>
-          <div class="weight-1 q-py-sm">
-            Актуальность на:
-            <span>{{ formatDate(props.data?.sensors_payload?.bearings[0]?.signal_values[0]?.batch_time)}}</span>
+        <div class="weight-1 q-py-sm">
+          Актуальность на:
+          <span>{{ formatDate(props.data?.sensors_payload?.bearings[0]?.signal_values[0]?.batch_time) }}</span>
         </div>
       </div>
       <div class="weight-1 q-py-sm"
@@ -35,11 +37,11 @@
         <div class="row rounded-borders" style="background-color: #FAFAFA;">
           <div style="width:30px"></div>
           <q-chip class="date-chip weight-3">
-            {{ props.exhghauster.rotor.lastDate }} сут
+            3 сут
           </q-chip>
           <div style="opacity:0.7;font-size: 12px;" class="column q-ml-sm items-center justify-center">
             <div>Прогноз</div>
-            <div class="weight-3">{{ props.exhghauster.rotor.lastDate }} сут</div>
+            <div class="weight-3">3 сут</div>
           </div>
         </div>
       </div>
@@ -47,40 +49,29 @@
       <q-img src="~assets/scheme-rotor.svg" class="rotor-img" />
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Предупреждение" style="padding-top:10px">
         <q-list style="font-size: 13px !important;">
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs warning q-ml-sm">
+          <q-item v-for="st in otherStatus" :key="st.name" :class="st.status"
+            class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs q-ml-sm">
             <q-item-section class="q-my-none">
-              {{ }}Ошибка
+              {{ st.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
-              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
-            </q-item-section>
-          </q-item>
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-my-xs warning q-ml-sm">
-            <q-item-section class="q-my-none">
-              {{ }}Ошибка
-            </q-item-section>
-            <q-item-section class="items-end q-my-none">
-              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
+              <q-chip class="damage-chip" :class="st.status + '-chip'" :icon="st.icon"></q-chip>
             </q-item-section>
           </q-item>
         </q-list>
       </q-expansion-item>
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
         <q-list v-for="bearing in bearingStatus" :key="bearing.name" style="font-size: 13px !important;">
-          <q-item :class="{
-            warning: bearing.overall === 'warning', danger: bearing.overall === 'alarm', positive: bearing.overall === 'ok'
-          }" class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
+          <q-item :class="bearing.overall" class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
             <q-item-section class="q-my-none">
               {{ bearing.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
               <div class="row">
-                <q-chip v-if="bearing.temperature !== 'ok'" :class="{
-                  'warning-chip': bearing.temperature === 'warning', 'danger-chip': bearing.temperature === 'alarm'
-                }" class="damage-chip" icon="thermostat"></q-chip>
-                <q-chip v-if="bearing.vibration !== 'ok' && !!bearing.vibration" :class="{
-                  'warning-chip': bearing.vibration === 'warning', 'danger-chip': bearing.vibration === 'alarm'
-                }" class="damage-chip" icon="sensors"></q-chip>
+                <q-chip v-if="bearing.temperature !== 'ok'" :class="bearing.temperature + '-chip'" class="damage-chip"
+                  icon="thermostat"></q-chip>
+                <q-chip v-if="bearing.vibration !== 'ok' && !!bearing.vibration" :class="bearing.vibration + '-chip'"
+                  class="damage-chip" icon="sensors"></q-chip>
               </div>
             </q-item-section>
           </q-item>
@@ -94,39 +85,47 @@ import { defineProps, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { date } from 'quasar'
 
-const headerClass = ref('danger')
-
 const bearingStatus = ref([])
+const otherStatus = ref([])
 const router = useRouter()
 const props = defineProps({
   data: Object,
-  exhghauster: {
-    required: false,
-    default: {
-      name: 'У-113',
-      rotor: {
-        date: '17.02.2012',
-        number: '12K',
-        lastDate: 3,
-        estimatedDate: 10
-      }
-    }
-  }
 })
 
 onMounted(() => {
-  console.log(props.data.sensors_payload.bearings)
   bearingStatus.value = proccessBearings()
+  otherStatus.value = proccessOtherSignals()
 })
 
-function proccessOtherSirgnals() {
-  // const map = [{}]
-  // props.data.sensors_payload.other_senors.forEach((v) => {
-  //   if ()
-  //     map.name = v.device_kind.name
-  // })
+function proccessOtherSignals() {
+  const map = []
+  props.data.sensors_payload.other_senors.forEach((v) => {
+    console.log(v)
+    if (v.device_kind.name === 'Маслосистема') {
+      v.signal_values.forEach(s => {
+        if (s.signal_kind_code === 'oil_level') {
+          map.push({ status: s.status, icon: 'opacity', name: v.device_kind.name })
+        }
+        if (s.signal_kind_code === 'oil_pressure') {
+          map.push({ status: s.status, icon: 'compress', name: v.device_kind.name })
+        }
+      })
+    }
+    if (v.device_kind.name === 'Газовый коллектор') {
+      map.push({ status: v.signal_values.find(g => g.signal_kind_code === 'temperature_before')?.status, icon: 'thermostat', name: v.device_kind.name })
+      map.push({ status: v.signal_values.find(g => g.signal_kind_code === 'underpressure_before')?.status, icon: 'compress', name: v.device_kind.name })
+    }
+    if (v.device_kind.name === 'Охладитель') {
+      if (v.signal_values.some(g => g.status !== 'ok')) {
+        map.push({ status: v.signal_values.find(g => g.status === 'warning' || g.status === 'alarm')?.status, icon: 'thermostat', name: v.device_kind.name })
+      } else {
+        map.push({ status: 'ok', icon: 'thermostat', name: v.device_kind.name })
+      }
+    }
+  })
+  return map.filter(m => m.status != 'ok')
 }
-function formatDate(timeStamp){
+function formatDate(timeStamp) {
   return date.formatDate(timeStamp, 'DD-MM-YYYY HH:mm:ss')
 }
 
@@ -173,6 +172,9 @@ function proccessBearings() {
   }
 }
 
+.warning2 {
+  color: $warning-accent;
+}
 
 .card-main {
   padding: 10px 15px 20px 12px;
@@ -199,11 +201,11 @@ function proccessBearings() {
   border: 1px solid;
 }
 
-.danger {
+.alarm {
   background-color: $danger;
 }
 
-.positive {
+.ok {
   background-color: $positive;
   color: white;
 }
@@ -212,7 +214,7 @@ function proccessBearings() {
   background-color: $warning;
 }
 
-.danger-chip {
+.alarm-chip {
   background-color: #FCDBCB;
   border: 1px solid $accent;
   color: $accent;
