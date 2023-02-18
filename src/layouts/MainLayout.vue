@@ -9,6 +9,10 @@
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
 
         <q-space />
+        <button icon="arrow_forward" v-if="route.path.includes('exhauster')"
+          @click="router.replace({ path: `../trends/${route.params.id}` })" class="card-link-btn shadow-1">
+          <q-icon size="30px" name="query_stats" />
+        </button>
         <input style="height:36px" outlined hide-bottom-space class="q-mx-sm" color="primary" v-model="offset" />
         <q-btn color="primary" @click="offsetStore.setOffset(offset)">установить</q-btn>
         <q-icon class="text-accent notification_icon cursor-pointer"
@@ -49,16 +53,19 @@
 
 <script setup>
 import { useUserStore } from "src/stores/user"
-import { useRouter } from 'vue-router';
-import { defineAsyncComponent, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router';
+import { defineAsyncComponent, ref, onMounted } from 'vue'
 import { useOffsetStore } from "src/stores/mainStore"
 
 import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
 
-
+onMounted(() => {
+  console.log(route)
+})
 const offsetStore = useOffsetStore()
 const offset = ref(offsetStore.offset)
 const router = useRouter()
+const route = useRoute()
 const userStorage = useUserStore()
 const notificationDrawerOpen = ref(false)
 
@@ -76,7 +83,24 @@ const toAdmin = () => {
   background-color: $background1;
 }
 </style>
-<style>
+<style lang="scss">
+.card-link-btn {
+  padding: 0;
+  height: 28px;
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FAFAFA;
+  border: 1px solid black;
+  border-radius: 4px;
+  position: inherit !important;
+
+  & :hover {
+    cursor: pointer;
+  }
+}
+
 .evraz-logo {
   position: absolute;
   width: 132.53px;

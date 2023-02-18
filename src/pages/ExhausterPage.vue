@@ -551,3 +551,21 @@ export default {
   background-color: #FAB82E;
 }
 </style>
+<style lang="scss">
+.card-link-btn {
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  background: #FAFAFA;
+  border: 1px solid #EAEAEA;
+  border-radius: 4px;
+
+  & :hover {
+    cursor: pointer;
+  }
+}
+</style>

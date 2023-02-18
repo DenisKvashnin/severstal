@@ -5,7 +5,7 @@
       <div class="agenda">
         <q-radio val="ok" size="30px" keep-color v-model="sortings" label="В работе" color="positive" />
         <q-radio val="warning" size="30px" keep-color v-model="sortings" label="Предупреждение" color="primary" />
-        <q-radio val="alarm" size="30px" keep-color v-model="sortings" label="Опасность" color="accent" />
+        <q-radio val="alarm" size="30px" keep-color v-model="sortings" label="Авария" color="accent" />
         <q-radio val="all" size="30px" keep-color v-model="sortings" label="Все" color="grey" />
       </div>
       <q-space />
