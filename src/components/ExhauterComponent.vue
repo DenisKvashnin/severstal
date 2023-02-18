@@ -6,10 +6,11 @@
         {{ props.data.name }}
       </div>
       <div class="row">
-        <button icon="arrow_forward" @click="router.push({ path: `trends/${props.id}` })" class="card-link-btn shadow-1">
+        <button icon="arrow_forward" @click="router.push({ path: `trends/${props.data.id}` })"
+          class="card-link-btn shadow-1">
           <q-icon size="20px" name="query_stats" />
         </button>
-        <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.id}` })"
+        <button icon="arrow_forward" @click="router.push({ path: `exhauster/${props.data.id}` })"
           class="card-link-btn shadow-1 arrow_forward_btn">
           <q-icon size="26px" name="chevron_right" rounded color="black" />
         </button>
@@ -105,23 +106,32 @@ onMounted(() => {
 })
 
 function proccessBearings() {
-  const colors = []
-  props.data.sensors_payload.bearings.forEach((b) => {
-
-    const tempretureStatus = b.signal_values.find((v) => v.signal_kind_code === "temperature").status
-    colors.push(['tempreture', tempretureStatus, b.device_kind.name])
-    const vibrationEls = b.signal_values.map((v) => {
+  const bearings = []
+  props.data.sensors_payload.bearings.forEach((b, i) => {
+    bearings.push({ name: b.device_kind, vibration: 'ok', tempreture: 'ok', overall: 'ok' })
+    b.signal_values.forEach((v) => {
       if (v.signal_kind_code === 'vibration_horizontal' || v.signal_kind_code === 'vibration_vertical' || v.signal_kind_code === 'vibration_axial') {
-        return 1
+        if (v.status === 'warning' && bearings[i].vibration !== 'alarm') {
+          bearings[i].vibration = 'warning'
+        } else if (v.status === 'alarm') {
+          bearings[i].vibration = 'alarm'
+        }
       }
-      return 0
+      if (v.signal_kind_code === "tempreture") {
+        if (v.status === 'warning' && bearings[i].tempreture !== 'alarm') {
+          bearings[i].tempreture = 'warning'
+        } else if (v.status === 'alarm') {
+          bearings[i].tempreture = 'alarm'
+        }
+      }
     })
-    const vibrationStatus = vibrationEls.every((v) => {
-
-    })
-    colors.push(['vibration', vibrationStatus, b.device_kind.name])
+    if (bearings[i].vibration === 'alarm' || bearings[i].tempreture === 'alarm') {
+      bearings[i].overall = 'alarm'
+    } else if (bearings[i].vibration === 'warning' || bearings[i].tempreture === 'warning') {
+      bearings[i].overall = 'warning'
+    }
   })
-  return colors
+  return bearings
 }
 </script>
 <style lang="scss" scoped>
