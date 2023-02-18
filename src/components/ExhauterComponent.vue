@@ -112,7 +112,6 @@ const props = defineProps({
 
 onMounted(() => {
   bearingStatus.value = proccessBearings()
-  console.log(bearingStatus.value)
 })
 
 function proccessBearings() {
