@@ -113,7 +113,6 @@ const props = defineProps({
 onMounted(() => {
   console.log(props.data.sensors_payload.bearings)
   bearingStatus.value = proccessBearings()
-  // console.log(proccessOtherSirgnals())
 })
 
 function proccessOtherSirgnals() {

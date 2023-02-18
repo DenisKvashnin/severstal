@@ -1,11 +1,14 @@
 <template>
   <div class="wrapper">
     <div class="card">
-      <div class="welcome-label">Добро пожаловать!</div>
+      <div class="welcome-label"><span style="font-size: 40px">
+              <img src="~assets/evraz-logo.svg" class="cursor-pointer" style="width: 200px" />
+
+      </span></div>
 
       <q-form @submit="loginUser(formData.name, formData.password)">
         <q-input v-model="formData.name" @update:model-value="error = false" :error="error" :rules='[v => !!v || ""]'
-          dense label="Имя" hint="Укажите имя" counter maxlength="20" />
+          dense label="login" hint="Введите логин" counter maxlength="20" />
 
         <q-input v-model="formData.password" @update:model-value="error = false" :error="error"
           :rules='[v => !!v || ""]' dense type="password" label="Пароль" hint="Укажите пароль" counter maxlength="20"

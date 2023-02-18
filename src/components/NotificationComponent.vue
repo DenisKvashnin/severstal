@@ -65,7 +65,6 @@ export default {
   computed: {
     showAll: {
       get: function () {
-        console.log(this.filterToggle)
         return this.filterToggle.openIssue
       },
       set: function (newValue) {
@@ -84,13 +83,10 @@ export default {
       // rows contain the entire data
       // terms contains whatever you have as filter
 
-      console.log(terms, rows)
-
       lowerSearch = terms.search ? terms.search.toLowerCase() : ""
 
       const filteredRows = rows.filter(
         (row, i) => {
-          console.log(row)
           let ans = false
 
           //Gather toggle conditions

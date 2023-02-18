@@ -12,9 +12,22 @@
         <q-icon class="text-accent notification_icon cursor-pointer"
           @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
-          <q-avatar @click="router.push({ path: '/auth' })" class="text-black weight-1 cursor-pointer"
-            style="margin-left:10px" rounded color="grey-12" text-color="white">
-            {{ Array.from(userStorage.user.username)[0].toUpperCase() }}</q-avatar>
+
+          <q-avatar class="text-black weight-1 cursor-pointer" style="margin-left:10px" rounded color="grey-12"
+            text-color="white">
+            {{ Array.from(userStorage.user.username)[0].toUpperCase() }}
+            <q-menu persistent auto-close>
+              <q-list style="min-width: 100px">
+                <q-item clickable>
+                  <q-item-section @click="toAdmin()">Панель администратора</q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable>
+                  <q-item-section @click="router.push({ path: '/auth' })">Выйти</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-avatar>
         </div>
       </q-toolbar>
     </q-header>
@@ -27,13 +40,18 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
   </q-layout>
+  <ButtonResetScreenComponent />
 </template>
 
 <script setup>
 import { useUserStore } from "src/stores/user"
 import { useRouter } from 'vue-router';
 import { defineAsyncComponent, ref } from 'vue'
+
+import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
+
 
 
 
@@ -46,8 +64,9 @@ const notificationDrawerOpen = ref(false)
 const notificationComponent = defineAsyncComponent(() =>
   import('components/NotificationComponent.vue')
 )
-
-
+const toAdmin = () => {
+  window.location.href = "https://evraz-api.kovalev.team/admin/evraz_kafka_datum"
+}
 </script>
 
 <style scoped lang="scss">
