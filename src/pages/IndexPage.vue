@@ -1,13 +1,18 @@
 <template>
   <q-page style="font-family: Arial, Helvetica, sans-serif;">
     <div class="second-header">
+      <q-input hide-bottom-space class="q-mx-sm" color="primary" v-model="offset"
+        :rules="[val => val <= 32567 && val >= 352 || '32456 > значение > 352']" />
+      <q-btn color="primary" @click="makeOffset()">установить</q-btn>
       <q-space />
+
       <div class="agenda">
         <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
         <q-checkbox size="30px" keep-color v-model="sortings.yellow" label="Предупреждение" color="primary" />
         <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
       </div>
       <q-space />
+      <div style="width:360px"></div>
       <q-btn class="question-btn q-mr-lg" dense rounded size="21px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left"
           style="white-space: nowrap;overflow-y: hidden; height: 50px">
@@ -30,20 +35,27 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useOffsetStore } from "src/stores/mainStore"
 import Aglomachine from "../components/AglomachineComponent.vue"
 import ExhausterService from "../services/ExhausterService"
 
-const router = useRoute()
+const offsetStore = useOffsetStore()
 const sortings = ref({
   red: false,
   yellow: false,
   green: false
 })
+const offset = ref(offsetStore.offset)
 const machines = ref([])
+
 onMounted(async () => {
-  machines.value = (await ExhausterService.getMachines(router.query.time_machine_offset)).sinter_machines
+  machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
 })
+
+async function makeOffset() {
+  offsetStore.setOffset(offset.value)
+  machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
+}
 </script>
 
 <style lang = "scss" scoped>

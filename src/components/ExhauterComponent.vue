@@ -81,7 +81,7 @@
   </q-card>
 </template>
 <script setup>
-import { defineProps, ref, onMounted } from 'vue'
+import { defineProps, ref, onMounted, watch, onUpdated } from 'vue'
 import { useRouter } from 'vue-router';
 import { date } from 'quasar'
 
@@ -92,15 +92,19 @@ const props = defineProps({
   data: Object,
 })
 
+onUpdated(() => {
+  bearingStatus.value = proccessBearings()
+  otherStatus.value = proccessOtherSignals()
+})
 onMounted(() => {
   bearingStatus.value = proccessBearings()
   otherStatus.value = proccessOtherSignals()
 })
 
+
 function proccessOtherSignals() {
   const map = []
   props.data.sensors_payload.other_senors.forEach((v) => {
-    console.log(v)
     if (v.device_kind.name === 'Маслосистема') {
       v.signal_values.forEach(s => {
         if (s.signal_kind_code === 'oil_level') {
@@ -153,6 +157,9 @@ function proccessBearings() {
   })
   return bearings
 }
+watch(props.data, () => {
+  console.log(1)
+})
 </script>
 <style lang="scss" scoped>
 .card-header {

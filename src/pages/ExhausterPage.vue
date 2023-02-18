@@ -3,69 +3,71 @@
 
     <div style="left:49.6%;top:16%;width:10.19%" class="exgauster-scheme-text">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(oilLevel?.batch_time)}}</strong>
+        <strong>{{ formatDate(oilLevel?.batch_time) }}</strong>
       </q-tooltip>
-      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[this.toColor(oilLevel?.status)]" class="grey"/>
+      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[this.toColor(oilLevel?.status)]"
+        class="grey" />
     </div>
 
     <div style="left:74.7%;top:30.3%;width: 11.8%" class="liquid-measure exgauster-scheme-text">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(oilPressure?.batch_time)}}</strong>
+        <strong>{{ formatDate(oilPressure?.batch_time) }}</strong>
       </q-tooltip>
-      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[this.toColor(oilPressure?.status)]"/>
+      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]"
+        :color="[this.toColor(oilPressure?.status)]" />
     </div>
 
 
     <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text" :class="[waterAfterCoolerTemp?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(waterAfterCoolerTemp?.batch_time)}}</strong>
+        <strong>{{ formatDate(waterAfterCoolerTemp?.batch_time) }}</strong>
       </q-tooltip>
-      {{waterAfterCoolerTemp?.value?.toFixed(2)}} °C
+      {{ waterAfterCoolerTemp?.value?.toFixed(2) }} °C
     </div>
 
     <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text" :class="[waterBeforeCoolerTemp?.status]">
-      {{waterBeforeCoolerTemp?.value?.toFixed(2)}} °C
+      {{ waterBeforeCoolerTemp?.value?.toFixed(2) }} °C
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(waterBeforeCoolerTemp?.batch_time)}}</strong>
+        <strong>{{ formatDate(waterBeforeCoolerTemp?.batch_time) }}</strong>
       </q-tooltip>
     </div>
     <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text" :class="[coolerBeforeTemp?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(coolerBeforeTemp?.batch_time)}}</strong>
+        <strong>{{ formatDate(coolerBeforeTemp?.batch_time) }}</strong>
       </q-tooltip>
-      {{coolerBeforeTemp?.value?.toFixed(2)}} °C
+      {{ coolerBeforeTemp?.value?.toFixed(2) }} °C
     </div>
     <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text" :class="coolerAfterTemp?.status">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(coolerAfterTemp?.batch_time)}}</strong>
+        <strong>{{ formatDate(coolerAfterTemp?.batch_time) }}</strong>
       </q-tooltip>
-      {{coolerAfterTemp?.value?.toFixed(2)}} °C
+      {{ coolerAfterTemp?.value?.toFixed(2) }} °C
     </div>
 
 
     <div style="left:72.15%;top:43.6%;" class="exgauster-scheme-text" :class="[rotorCurrent?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(rotorCurrent?.batch_time)}}</strong>
+        <strong>{{ formatDate(rotorCurrent?.batch_time) }}</strong>
       </q-tooltip>
-      {{rotorCurrent?.value?.toFixed(2)}}
+      {{ rotorCurrent?.value?.toFixed(2) }}
     </div>
     <div style="left:72.15%;top:46.6%;" class="exgauster-scheme-text" :class="[statorCurrent?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(statorCurrent?.batch_time)}}</strong>
+        <strong>{{ formatDate(statorCurrent?.batch_time) }}</strong>
       </q-tooltip>
-      {{statorCurrent?.value?.toFixed(2)}}
+      {{ statorCurrent?.value?.toFixed(2) }}
     </div>
     <div style="left:72.15%;top:49.6%;" class="exgauster-scheme-text" :class="[rotorVoltage?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(rotorVoltage?.batch_time)}}</strong>
+        <strong>{{ formatDate(rotorVoltage?.batch_time) }}</strong>
       </q-tooltip>
-      {{rotorVoltage?.value?.toFixed(2)}}
+      {{ rotorVoltage?.value?.toFixed(2) }}
     </div>
     <div style="left:72.15%;top:52.6%;" class="exgauster-scheme-text" :class="[statorVoltage?.status]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(statorVoltage?.batch_time)}}</strong>
+        <strong>{{ formatDate(statorVoltage?.batch_time) }}</strong>
       </q-tooltip>
-      {{statorVoltage?.value?.toFixed(2)}}
+      {{ statorVoltage?.value?.toFixed(2) }}
     </div>
 
 
@@ -83,76 +85,90 @@
     <div style="left:15%;top:53.8%;width:5.3%" class="row justify-center exgauster-scheme-text">
       9 ПС
     </div>
-    <div style="left:15%;top:57.2%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing9Temp?.status]">
+    <div style="left:15%;top:57.2%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing9Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing9Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing9Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{ bearing9Temp?.value?.toFixed(2) }}</div>
+        {{ bearing9Temp?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:15%;top:66.3%;width:5.3%" class="row justify-center exgauster-scheme-text">
       8 ПС
     </div>
-    <div style="left:15%;top:69.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8Temp?.status]">
+    <div style="left:15%;top:69.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing8Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing8Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing8Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing8Temp?.value?.toFixed(2)}}</div>
+        {{ bearing8Temp?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:15%;top:72.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8VerVibr?.status]">
+    <div style="left:15%;top:72.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing8VerVibr?.status]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing8VerVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing8VerVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing8VerVibr?.value?.toFixed(2)}}</div>
+        {{ bearing8VerVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:15%;top:75.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8HorVibr?.status]">
+    <div style="left:15%;top:75.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing8HorVibr?.status]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing8HorVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing8HorVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing8HorVibr?.value?.toFixed(2)}}</div>
+        {{ bearing8HorVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:15%;top:78.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8AxiaVibr?.status]">
+    <div style="left:15%;top:78.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing8AxiaVibr?.status]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing8AxiaVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing8AxiaVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing8AxiaVibr?.value?.toFixed(2)}}</div>
+        {{ bearing8AxiaVibr?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:39.4%;top:31.18%;width:5.3%" class="row justify-center exgauster-scheme-text">
       4 ПС
     </div>
-    <div style="left:39.4%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing4Temp?.status]">
+    <div style="left:39.4%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing4Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing4Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing4Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing4Temp?.value?.toFixed(2)}}</div>
+        {{ bearing4Temp?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:39.4%;top:68.0%;width:5.3%" class="row justify-center exgauster-scheme-text">
       6 ПС
     </div>
-    <div style="left:39.5%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing6Temp?.status]">
+    <div style="left:39.5%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing6Temp?.status]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing6Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing6Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing6Temp?.value?.toFixed(2)}}</div>
+        {{ bearing6Temp?.value?.toFixed(2) }}
+      </div>
     </div>
 
     <div style="left:39.4%;top:78.2%;width:5.3%" class="row justify-center exgauster-scheme-text">
@@ -160,67 +176,78 @@
     </div>
 
     <div style="left:26.6%;top:88.77%;width:4.4%;" class="row justify-center exgauster-scheme-text">
-      <q-linear-progress dark size="11.2px" :value="[gate_valve?.value]" :color="[gate_valveColor]"/>
+      <q-linear-progress dark size="11.2px" :value="[gate_valve?.value]" :color="[gate_valveColor]" />
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(gate_valve?.batch_time)}}</strong>
+        <strong>{{ formatDate(gate_valve?.batch_time) }}</strong>
       </q-tooltip>
     </div>
 
-    <div style="left:39.5%;top:81.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7Temp?.status]">
+    <div style="left:39.5%;top:81.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing7Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing7Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing7Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing7Temp?.value?.toFixed(2)}}</div>
+        {{ bearing7Temp?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:39.5%;top:84.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7VerVibr?.status]">
+    <div style="left:39.5%;top:84.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing7VerVibr?.status]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing7VerVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing7VerVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing7VerVibr?.value?.toFixed(2)}}</div>
+        {{ bearing7VerVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:39.5%;top:87.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7HorVibr?.status]">
+    <div style="left:39.5%;top:87.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing7HorVibr?.status]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing7HorVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing7HorVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing7HorVibr?.value?.toFixed(2)}}</div>
+        {{ bearing7HorVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:39.5%;top:90.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7AxiaVibr?.status]">
+    <div style="left:39.5%;top:90.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing7AxiaVibr?.status]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing7AxiaVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing7AxiaVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing7AxiaVibr?.value?.toFixed(2)}}</div>
+        {{ bearing7AxiaVibr?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:48.1%;top:31.1%;width:5.3%" class="row justify-center exgauster-scheme-text">
       3 ПС
     </div>
-    <div style="left:48.13%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing3Temp?.status]">
+    <div style="left:48.13%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing3Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing3Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing3Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing3Temp?.value?.toFixed(2)}}</div>
+        {{ bearing3Temp?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:48.1%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       5 ПС
     </div>
-    <div style="left:48.2%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing5Temp?.status]">
+    <div style="left:48.2%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing5Temp?.status]">
       <div>T, °C</div>
-      <div>{{bearing5Temp?.value?.toFixed(2)}}</div>
+      <div>{{ bearing5Temp?.value?.toFixed(2) }}</div>
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-        <strong>{{formatDate(bearing3Temp?.batch_time)}}</strong>
+        <strong>{{ formatDate(bearing3Temp?.batch_time) }}</strong>
       </q-tooltip>
     </div>
 
@@ -228,101 +255,120 @@
     <div style="left:56.4%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       2 ПС
     </div>
-    <div style="left:56.4%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2Temp?.status]">
+    <div style="left:56.4%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing2Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing2Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing2Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing2Temp?.value?.toFixed(2)}}</div>
+        {{ bearing2Temp?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:56.4%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2VerVibr?.status]">
+    <div style="left:56.4%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing2VerVibr?.status]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing2VerVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing2VerVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing2VerVibr?.value?.toFixed(2)}}</div>
+        {{ bearing2VerVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:56.4%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2HorVibr?.status]">
+    <div style="left:56.4%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing2HorVibr?.status]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing2HorVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing2HorVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing2HorVibr?.value?.toFixed(2)}}</div>
+        {{ bearing2HorVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:56.4%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2AxiaVibr?.status]">
+    <div style="left:56.4%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing2AxiaVibr?.status]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing2AxiaVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing2AxiaVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing2AxiaVibr?.value?.toFixed(2)}}</div>
+        {{ bearing2AxiaVibr?.value?.toFixed(2) }}
+      </div>
     </div>
 
 
     <div style="left:74.2%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       1 ПС
     </div>
-    <div style="left:74.2%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1Temp?.status]">
+    <div style="left:74.2%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing1Temp?.status]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing1Temp?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing1Temp?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing1Temp?.value?.toFixed(2)}}</div>
+        {{ bearing1Temp?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:74.2%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1VerVibr?.status]">
+    <div style="left:74.2%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing1VerVibr?.status]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing1VerVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing1VerVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing1VerVibr?.value?.toFixed(2)}}</div>
+        {{ bearing1VerVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:74.2%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1HorVibr?.status]">
+    <div style="left:74.2%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing1HorVibr?.status]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing1HorVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing1HorVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing1HorVibr?.value?.toFixed(2)}}</div>
+        {{ bearing1HorVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <div style="left:74.2%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1AxiaVibr?.status]">
+    <div style="left:74.2%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text"
+      :class="[bearing1AxiaVibr?.status]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
-          <strong>{{formatDate(bearing1AxiaVibr?.batch_time)}}</strong>
+          <strong>{{ formatDate(bearing1AxiaVibr?.batch_time) }}</strong>
         </q-tooltip>
-        {{bearing1AxiaVibr?.value?.toFixed(2)}}</div>
+        {{ bearing1AxiaVibr?.value?.toFixed(2) }}
+      </div>
     </div>
-    <q-img src="~assets/exgauster-scheme.svg"/>
+    <q-img src="~assets/exgauster-scheme.svg" />
   </div>
 </template>
 <script>
-import {useRoute} from 'vue-router';
+import { useRoute } from 'vue-router';
+import { useOffsetStore } from "src/stores/mainStore"
 import AspiratorService from "../services/AspiratorService";
-import {date} from "quasar";
+import { date } from "quasar";
 
 export default {
   data: () => ({
     router: null,
     aspirator: null,
+    store: null,
     bearings: [],
     otherSenors: []
   }),
 
   async mounted() {
     this.router = useRoute()
-    this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.router.query.time_machine_offset)
+    this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
     this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
     this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
   },
 
   async created() {
+    this.store = useOffsetStore()
     setInterval(async () => {
-      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.router.query.time_machine_offset)
+      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
     }, 100000)
   },
 
@@ -357,7 +403,7 @@ export default {
     bearing6Temp: function () {
       return this.bearings[5]?.signal_values[0]
     },
-    bearing5Temp: function (){
+    bearing5Temp: function () {
       return this.bearings[4]?.signal_values[0]
     },
     bearing4Temp: function () {
@@ -391,53 +437,53 @@ export default {
       return this.bearings[0]?.signal_values[0]
     },
 
-    statorCurrent: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s=>s.signal_kind_code=="stator_current")[0]
+    statorCurrent: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s => s.signal_kind_code == "stator_current")[0]
     },
-    rotorCurrent: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s=>s.signal_kind_code==="rotor_current")[0]
+    rotorCurrent: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s => s.signal_kind_code === "rotor_current")[0]
     },
-    rotorVoltage: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s=>s.signal_kind_code==="rotor_voltage")[0]
+    rotorVoltage: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s => s.signal_kind_code === "rotor_voltage")[0]
     },
-    statorVoltage: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s=>s.signal_kind_code==="stator_voltage")[0]
+    statorVoltage: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Главный привод")[0]?.signal_values.filter(s => s.signal_kind_code === "stator_voltage")[0]
     },
 
-    coolerBeforeTemp: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_before")[0]
+    coolerBeforeTemp: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s => s.signal_kind_code === "temperature_before")[0]
     },
-    waterBeforeCoolerTemp: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_before")[0]
+    waterBeforeCoolerTemp: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s => s.signal_kind_code === "temperature_before")[0]
     },
-    coolerAfterTemp: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_after" && s.value > 0.00)[0]
+    coolerAfterTemp: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s => s.signal_kind_code === "temperature_after" && s.value > 0.00)[0]
     },
-    waterAfterCoolerTemp: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s=>s.signal_kind_code==="temperature_after" && s.value < 0.00)[0]
+    waterAfterCoolerTemp: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Охладитель")[0]?.signal_values.filter(s => s.signal_kind_code === "temperature_after" && s.value < 0.00)[0]
     },
-    oilLevel: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_level")[0]
+    oilLevel: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s => s.signal_kind_code === "oil_level")[0]
     },
-    oilPressure: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_pressure")[0]
+    oilPressure: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s => s.signal_kind_code === "oil_pressure")[0]
     },
-    gate_valve: function (){
-      return this.otherSenors.filter(s=> s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s=>s.signal_kind_code==="gas_valve_open")[0]
+    gate_valve: function () {
+      return this.otherSenors.filter(s => s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s => s.signal_kind_code === "gas_valve_open")[0]
     },
-    gate_valveColor: function (){
-      return this.toColor(this.otherSenors.filter(s=> s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s=>s.signal_kind_code==="gas_valve_open")[0]?.status)
+    gate_valveColor: function () {
+      return this.toColor(this.otherSenors.filter(s => s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s => s.signal_kind_code === "gas_valve_open")[0]?.status)
     }
   },
 
   methods: {
-    toColor(status){
-      if(status === "ok") return "green-6";
-      if(status === "alarm") return "yellow-3";
-      if(status === "warning") return "red-3";
+    toColor(status) {
+      if (status === "ok") return "green-6";
+      if (status === "alarm") return "yellow-3";
+      if (status === "warning") return "red-3";
       return "yellow-3";
     },
-    formatDate(timeStamp){
+    formatDate(timeStamp) {
       return date.formatDate(timeStamp, 'DD-MM-YYYY HH:mm:ss')
     }
   }
@@ -471,15 +517,15 @@ export default {
   padding-left: 3px;
 }
 
-.alarm{
+.alarm {
   background-color: #EB5835;
 }
 
-.ok{
+.ok {
   background-color: #9CC983;
 }
 
-.warning{
+.warning {
   background-color: #FAB82E;
 }
 </style>
