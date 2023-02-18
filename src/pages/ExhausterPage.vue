@@ -334,8 +334,6 @@ export default {
 
   computed: {
     bearing9Temp: function () {
-      console.log(this.otherSenors)
-      console.log(this.aspirator)
       return this.bearings[8]?.signal_values[0]
     },
     bearing8Temp: function () {
