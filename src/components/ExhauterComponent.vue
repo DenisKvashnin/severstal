@@ -63,11 +63,14 @@
         </q-list>
       </q-expansion-item>
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
-        <q-list v-for="bearing in data.sensors_payload.bearings" :key="bearing.device_kind"
-          style="font-size: 13px !important;">
-          <q-item class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
+        <q-list v-for="bearing in bearingStatus" :key="bearing.name" style="font-size: 13px !important;">
+          <q-item
+            :class="{
+              warning: bearing.overall === 'warning', danger: bearing.overall === 'alarm', positive: bearing.overall === 'ok'
+            }"
+            class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
             <q-item-section class="q-my-none">
-              {{ bearing.device_kind.name }}
+              {{ bearing.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
               <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
@@ -79,11 +82,12 @@
   </q-card>
 </template>
 <script setup>
-import { defineProps, ref, watch, onUpdated, onMounted } from 'vue'
+import { defineProps, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 
 const headerClass = ref('danger')
 
+const bearingStatus = ref([])
 const router = useRouter()
 const props = defineProps({
   data: Object,
@@ -102,32 +106,36 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  console.log(proccessBearings())
+  bearingStatus.value = proccessBearings()
 })
 
 function proccessBearings() {
   const bearings = []
   props.data.sensors_payload.bearings.forEach((b, i) => {
-    bearings.push({ name: b.device_kind, vibration: 'ok', tempreture: 'ok', overall: 'ok' })
+    bearings.push({ name: b.device_kind.name, overall: 'ok' })
     b.signal_values.forEach((v) => {
       if (v.signal_kind_code === 'vibration_horizontal' || v.signal_kind_code === 'vibration_vertical' || v.signal_kind_code === 'vibration_axial') {
         if (v.status === 'warning' && bearings[i].vibration !== 'alarm') {
           bearings[i].vibration = 'warning'
         } else if (v.status === 'alarm') {
           bearings[i].vibration = 'alarm'
+        } else {
+          bearings[i].vibration = 'ok'
         }
       }
-      if (v.signal_kind_code === "tempreture") {
-        if (v.status === 'warning' && bearings[i].tempreture !== 'alarm') {
-          bearings[i].tempreture = 'warning'
+      if (v.signal_kind_code === "temperature") {
+        if (v.status === 'warning' && bearings[i].temperature !== 'alarm') {
+          bearings[i].temperature = 'warning'
         } else if (v.status === 'alarm') {
-          bearings[i].tempreture = 'alarm'
+          bearings[i].temperature = 'alarm'
+        } else {
+          bearings[i].temperature = 'ok'
         }
       }
     })
-    if (bearings[i].vibration === 'alarm' || bearings[i].tempreture === 'alarm') {
+    if (bearings[i].vibration === 'alarm' || bearings[i].temperature === 'alarm') {
       bearings[i].overall = 'alarm'
-    } else if (bearings[i].vibration === 'warning' || bearings[i].tempreture === 'warning') {
+    } else if (bearings[i].vibration === 'warning' || bearings[i].temperature === 'warning') {
       bearings[i].overall = 'warning'
     }
   })
