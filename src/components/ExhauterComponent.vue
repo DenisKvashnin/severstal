@@ -22,8 +22,11 @@
           {{ props.data.rotor_name }}
         </div>
         <div style="padding-left: 42.5%">
-          <q-chip
-            style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+          <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">{{ props.exhghauster.rotor.date }}</q-chip>
+        </div>
+          <div class="weight-1 q-py-sm">
+            Актуальность на:
+            <span>{{ formatDate(props.data?.sensors_payload?.bearings[0]?.signal_values[0]?.batch_time)}}</span>
         </div>
       </div>
       <div class="weight-1 q-py-sm"
@@ -89,6 +92,7 @@
 <script setup>
 import { defineProps, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
+import { date } from 'quasar'
 
 const headerClass = ref('danger')
 
@@ -122,6 +126,10 @@ function proccessOtherSirgnals() {
   //     map.name = v.device_kind.name
   // })
 }
+function formatDate(timeStamp){
+  return date.formatDate(timeStamp, 'DD-MM-YYYY HH:mm:ss')
+}
+
 function proccessBearings() {
   const bearings = []
   props.data.sensors_payload.bearings.forEach((b, i) => {
