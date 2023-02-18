@@ -2,11 +2,11 @@
   <div style="position: relative;">
 
     <div style="left:49.6%;top:16%;width:10.19%" class="exgauster-scheme-text">
-      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[oilLevel?.status]" class="grey"/>
+      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[this.toColor(oilLevel?.status)]" class="grey"/>
     </div>
 
     <div style="left:74.7%;top:30.3%;width: 11.8%" class="liquid-measure exgauster-scheme-text">
-      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[oilPressure?.status]"/>
+      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[this.toColor(oilPressure?.status)]"/>
     </div>
 
 
@@ -96,10 +96,14 @@
       <div>{{bearing6Temp?.value?.toFixed(2)}}</div>
     </div>
 
-
     <div style="left:39.4%;top:78.2%;width:5.3%" class="row justify-center exgauster-scheme-text">
       7 ПС
     </div>
+
+    <div style="left:26.6%;top:88.77%;width:4.4%;" class="row justify-center exgauster-scheme-text">
+      <q-linear-progress dark size="11.2px" :value="[gate_valve?.value]" :color="[gate_valveColor]"/>
+    </div>
+
     <div style="left:39.5%;top:81.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7Temp?.status]">
       <div>T, °C</div>
       <div>{{bearing7Temp?.value?.toFixed(2)}}</div>
@@ -297,19 +301,25 @@ export default {
     oilLevel: function (){
       return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_level")[0]
     },
-    oilLevelValue: function (){
-      return oilLevel?.value;
-    },
     oilPressure: function (){
       return this.otherSenors.filter(s=> s?.device_kind?.name === "Маслосистема")[0]?.signal_values.filter(s=>s.signal_kind_code==="oil_pressure")[0]
+    },
+    gate_valve: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s=>s.signal_kind_code==="gas_valve_open")[0]
+    },
+    gate_valveColor: function (){
+      return this.toColor(this.otherSenors.filter(s=> s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s=>s.signal_kind_code==="gas_valve_open")[0]?.status)
     }
   },
 
   methods: {
-    toBeatify(value){
-      if(value == null) return 0.00;
-      return value.toFixed(2)
-    }
+    toColor(status){
+      if(status === "ok") return "green-6";
+      if(status === "alarm") return "yellow-3";
+      if(status === "warning") return "red-3";
+      return "yellow-3";
+    },
+
   }
 
 }
