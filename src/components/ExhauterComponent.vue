@@ -19,7 +19,7 @@
     <div class="card-main">
       <div class="row items-center q-mb-sm">
         <div class="weight-2 q-mr-xs">
-          Ротор № {{ props.exhghauster.rotor.number }}
+          {{ props.data.rotor_name }}
         </div>
         <div style="padding-left: 42.5%">
           <q-chip
@@ -111,32 +111,32 @@ const props = defineProps({
 })
 
 onMounted(() => {
+  console.log(props.data.sensors_payload.bearings)
   bearingStatus.value = proccessBearings()
-  console.log(bearingStatus.value)
+  // console.log(proccessOtherSirgnals())
 })
 
+function proccessOtherSirgnals() {
+  // const map = [{}]
+  // props.data.sensors_payload.other_senors.forEach((v) => {
+  //   if ()
+  //     map.name = v.device_kind.name
+  // })
+}
 function proccessBearings() {
   const bearings = []
   props.data.sensors_payload.bearings.forEach((b, i) => {
-    bearings.push({ name: b.device_kind.name, overall: 'ok' })
+    bearings.push({ name: b.device_kind.name, overall: 'ok', temperature: 'ok', vibration: 'ok' })
     b.signal_values.forEach((v) => {
       if (v.signal_kind_code === 'vibration_horizontal' || v.signal_kind_code === 'vibration_vertical' || v.signal_kind_code === 'vibration_axial') {
-        if (v.status === 'warning' && bearings[i].vibration !== 'alarm') {
-          bearings[i].vibration = 'warning'
-        } else if (v.status === 'alarm') {
-          bearings[i].vibration = 'alarm'
-        } else {
-          bearings[i].vibration = 'ok'
+        if (v.status === 'alarm') {
+          bearings[i].vibration = v.status
+        } else if (v.status === 'warning' && bearings[i].vibration !== 'alarm') {
+          bearings[i].vibration = v.status
         }
       }
       if (v.signal_kind_code === "temperature") {
-        if (v.status === 'warning' && bearings[i].temperature !== 'alarm') {
-          bearings[i].temperature = 'warning'
-        } else if (v.status === 'alarm') {
-          bearings[i].temperature = 'alarm'
-        } else {
-          bearings[i].temperature = 'ok'
-        }
+        bearings[i].temperature = v.status
       }
     })
     if (bearings[i].vibration === 'alarm' || bearings[i].temperature === 'alarm') {

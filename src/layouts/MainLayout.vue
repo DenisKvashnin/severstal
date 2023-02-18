@@ -18,23 +18,11 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-drawer v-model="leftDrawerOpen" bordered>
-      <q-list>
-        <q-item-label header>
-          lol
-        </q-item-label>
-        <q-item>
-          1
-        </q-item>
-        <q-item>
-          2
-        </q-item>
-      </q-list>
-    </q-drawer>
 
 
-    <q-drawer v-model="notificationDrawerOpen" side="right" style="box-shadow: -4px 2px 10px 2px rgb(0 0 0 / 20%) inset;" width="80%">
-      <notificationComponent/>
+    <q-drawer v-model="notificationDrawerOpen" overlay :width="1100" side="right"
+      style="box-shadow: -4px 2px 10px 2px rgb(0 0 0 / 20%) inset;">
+      <notificationComponent />
     </q-drawer>
     <q-page-container>
       <router-view />
@@ -43,19 +31,23 @@
 </template>
 
 <script setup>
-import {defineAsyncComponent, ref} from 'vue'
 import { useUserStore } from "src/stores/user"
 import { useRouter } from 'vue-router';
+import { defineAsyncComponent, ref } from 'vue'
+
 
 
 const router = useRouter()
 const userStorage = useUserStore()
-const leftDrawerOpen = ref(false)
 const notificationDrawerOpen = ref(false)
+
+
 
 const notificationComponent = defineAsyncComponent(() =>
   import('components/NotificationComponent.vue')
 )
+
+
 </script>
 
 <style scoped lang="scss">

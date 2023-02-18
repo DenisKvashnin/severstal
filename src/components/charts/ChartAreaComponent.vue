@@ -66,10 +66,6 @@ const filteredSeries = computed(() => {
 
 const range = ref({ min: 0, max: 899 })
 
-onMounted(() => {
-  console.log(new Date().getTime() / 1000)
-})
-
 
 
 
