@@ -25,7 +25,7 @@
     </div>
     <div class="row wrap justify-center">
       <Aglomachine v-for="machine in filteredMachines" :exhausters="machine.aspirators" :name="machine.name"
-        :key="machine.id" />
+        :status="machine.status" :key="machine.id" />
     </div>
   </q-page>
 </template>

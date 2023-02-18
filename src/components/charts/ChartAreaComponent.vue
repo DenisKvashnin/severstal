@@ -42,13 +42,14 @@ const chartOptionsArea = {
 }
 
 const props = defineProps({
-  charts: Object
+  charts: Object,
+  names: Array
 })
 const filteredSeries = computed(() => {
   if (props?.charts?.charts) {
     const series = []
-    props.charts.charts.forEach((v) => {
-      series.push({ data: v[Object.keys(v)[0]] })
+    props.charts.charts.forEach((v, i) => {
+      series.push({ data: v[Object.keys(v)[0]], name: props.names[i] })
     })
     series.forEach((s, i) => {
       series[i].data = s.data.slice(s.data.length * range.value.min, s.data.length * range.value.max)

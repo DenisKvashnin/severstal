@@ -1,7 +1,7 @@
 <template>
   <div class="row q-ma-md">
     <div class="exhauter-group-wrapper">
-      <div class="exhauter-group-header">{{ props.name }}</div>
+      <div class="exhauter-group-header" :class="props.status">{{ props.name }}</div>
       <div class="exhauter-group">
         <Exhauter v-for="i in props.exhausters" :data="i" :key="i.id" />
       </div>
@@ -17,7 +17,8 @@ const props = defineProps({
     required: false,
     default: [{ id: '1' }, { id: '2' }]
   },
-  name: String
+  name: String,
+  status: String
 })
 </script>
 <style lang="scss" scoped>
@@ -32,6 +33,7 @@ const props = defineProps({
 
 .warning {
   background-color: $warning;
+  color: black;
 }
 
 .exhauter-group-wrapper {
@@ -42,8 +44,6 @@ const props = defineProps({
     font-size: 15px;
     border-radius: 5px 5px 0 0;
     margin-bottom: 10px;
-    background-color: $secondary;
-    color: white;
     padding: 10px 0 10px 16px;
   }
 

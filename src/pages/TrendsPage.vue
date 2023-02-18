@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ApexArea :charts="charts" />
+    <ApexArea :charts="charts" :names="Nnames" />
   </div>
   <q-drawer show-if-above bordered>
     <q-expansion-item expand-separator label="Подшипники" default-opened>
@@ -36,7 +36,7 @@
   </q-drawer>
 </template>
 <script setup>
-import { defineAsyncComponent, onMounted, ref, watch, computed } from 'vue'
+import { defineAsyncComponent, onMounted, ref } from 'vue'
 import AspiratorService from 'src/services/AspiratorService';
 import ChartsService from 'src/services/ChartsService';
 import { useRoute } from 'vue-router'
@@ -48,6 +48,7 @@ const route = useRoute()
 const sideMenuData = ref()
 const ids = ref(new Set())
 const charts = ref([])
+const Nnames = ref([])
 async function checkSignalId(id) {
   if (ids.value.has(id)) {
     ids.value.delete(id)
@@ -55,6 +56,24 @@ async function checkSignalId(id) {
     ids.value.add(id)
   }
   charts.value = await ChartsService.getCharts(Array.from(ids.value))
+  let names = []
+  ids.value.forEach(id => {
+    sideMenuData.value.bearings.forEach((v) => {
+      v.signal_values.forEach((f) => {
+        if (id === f.signal_kind_id) {
+          names.push(f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
+        }
+      })
+    })
+    sideMenuData.value.other_senors.forEach((v) => {
+      v.signal_values.forEach((f) => {
+        if (id === f.signal_kind_id) {
+          names.push(f.signal_kind_short_name + ' ' + f.signal_kind_dimension)
+        }
+      })
+    })
+  })
+  Nnames.value = names
 }
 
 onMounted(async () => {

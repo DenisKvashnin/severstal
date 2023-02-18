@@ -59,9 +59,7 @@ import { useOffsetStore } from "src/stores/mainStore"
 
 import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
 
-onMounted(() => {
-  console.log(route)
-})
+
 const offsetStore = useOffsetStore()
 const offset = ref(offsetStore.offset)
 const router = useRouter()
