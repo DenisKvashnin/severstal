@@ -4,6 +4,7 @@ export default class AspiratorService {
   static async getAspirator(id, time_machine_offset = null) {
     let params = {};
     if (time_machine_offset) {
+
       params = new URLSearchParams([
         ["time_machine_offset", time_machine_offset],
       ]);

@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <q-table
         title="Treats"
-        :rows="rows"
+        :rows="rows_requests"
         :columns="columns"
         row-key="name"
       >
@@ -12,7 +12,7 @@
         <template v-slot:top>
           <div style="width: 100%" class="row">
             <div class="col-9">
-              <q-toggle v-model="filterToggle.openIssue" val="openIssue" label="Открытые заявки" />
+              <q-toggle v-model="openIssue" @click="this.refreshIssue" val="openIssue" label="Открытые заявки" />
             </div>
             <div class="col-3">
               <q-input  dense debounce="400" color="primary" v-model="search">
@@ -28,57 +28,55 @@
   </div>
 </template>
 <script>
-import { defineProps } from 'vue';
+import IssueService from "src/services/IssueService";
+import moment from 'moment'
+
 export default {
   data() {
     return {
-      filterToggle: {
-        openIssue: true
-      },
+      openIssue: true,
+      issues: [],
       search: '',
       columns: [
-        {name: 'name', required: true, label: 'Агломашина', align: 'left', field: row => row.name, format: val => `${val}`, sortable: true},
-        {name: 'exhauster', align: 'center', label: 'Эксгаустер', field: 'exhauster', sortable: true},
-        {name: 'bearing', align: 'center', label: '№ Подшипника', field: 'bearing', sortable: true},
-        {name: 'error', label: 'Ошибка', field: 'error', sortable: true},
-        {name: 'dateTime', label: 'Дата время', field: 'dateTime', sortable: true},
-        {name: 'application', label: '№ Заявки', field: 'application', sortable: true},
-        {name: 'countIssue', label: 'Кол-во заявок', field: 'countIssue', sortable: true},
-        {name: 'check', label: 'Проверка', field: 'check', sortable: true},
-        {name: 'applicationStatus', label: 'Статус заявки', field: 'applicationStatus', sortable: true},
-      ],
-      rows : [
-        {
-          name: 'Заявка ',
-          exhauster: 'openIssue',
-          bearing: 159,
-          error: 6.0,
-          dateTime: 24,
-          application: 4.0,
-          countIssue: 87,
-          check: '14%',
-          applicationStatus: '1%'
-        }
+        {name: 'exhauster', align: 'center', label: 'Эксгаустер', field: row => row?.aspirator?.name, sortable: true},
+        {name: 'error', label: 'Ошибка', field: row => row.description, sortable: true},
+        {name: 'dateTime', label: 'Дата время', field: row => moment(row?.signal_value?.batch_time).format('M-DD-YYYY hh:mm:ss'), sortable: true},
+        {name: 'signalCode', label: 'Код сигнала', field: row => row?.signal_value?.signal_kind_code, sortable: true},
+        {name: 'signal', label: 'Сигнал', field: row => row?.signal_value?.signal_kind_short_name, sortable: true},
+        {name: 'value', label: 'Значение', field: row => row?.signal_value?.value, sortable: true},
+        {name: 'signalKindDimension', label: 'Ед.измр.', field: row => row?.signal_value?.signal_kind_dimension, sortable: true},
+        {name: 'state', label: 'Статус.', field: row => row?.state, sortable: true}
       ]
     }
   },
   computed: {
     showAll: {
       get: function () {
-        return this.filterToggle.openIssue
+        return this.openIssue
       },
       set: function (newValue) {
-        this.filterToggle.openIssue = newValue
+        this.openIssue = newValue
       }
     },
     filter() {
       return {
         search: this.search,
-        breakfast: this.filterToggle.openIssue
+        breakfast: this.openIssue
       }
+    },
+    rows_requests: function () {
+      return this.issues?.data?.issue_requests;
     }
   },
+  async created() {
+    setInterval(async () => {
+      this.issues = await IssueService.getIssues(this.openIssue)
+    }, 5000)
+  },
   methods: {
+    async refreshIssue(){
+      this.issues = await IssueService.getIssues(this.openIssue)
+    },
     customFilter(rows, terms) {
       // rows contain the entire data
       // terms contains whatever you have as filter

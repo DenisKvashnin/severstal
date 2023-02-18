@@ -105,7 +105,6 @@ onUpdated(() => {
   otherStatus.value = proccessOtherSignals()
 })
 onMounted(() => {
-  console.log()
   bearingStatus.value = proccessBearings()
   otherStatus.value = proccessOtherSignals()
 })
