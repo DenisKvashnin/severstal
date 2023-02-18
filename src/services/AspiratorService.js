@@ -1,9 +1,15 @@
 import httpClient from "../clients/exhausterHttpClient";
 
 export default class AspiratorService {
-  static async getAspirator(id) {
+  static async getAspirator(id, time_machine_offset = null) {
+    let params = {};
+    if (time_machine_offset) {
+      params = new URLSearchParams([
+        ["time_machine_offset", time_machine_offset],
+      ]);
+    }
     const response = await httpClient()
-      .get(`aspirators/${id}`)
+      .get(`aspirators/${id}`, { params })
       .catch((err) => {
         return err;
       });

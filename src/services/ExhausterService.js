@@ -10,7 +10,12 @@ export default class AuthorArticleService {
     return response.data;
   }
 
-  static async getExhauserStatById(id) {
+  static async getExhauserStatById(id, time_machine_offset = null) {
+    if (time_machine_offset) {
+      params = new URLSearchParams([
+        ["time_machine_offset", time_machine_offset],
+      ]);
+    }
     const response = await httpClient()
       .get(`sinter_machines/${id}`)
       .catch((err) => {

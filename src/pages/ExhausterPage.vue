@@ -197,14 +197,14 @@ export default {
 
   async mounted() {
     this.router = useRoute()
-    this.aspirator = await AspiratorService.getAspirator(this.router.params["id"])
+    this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.router.query.time_machine_offset)
     this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
     this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
   },
 
   async created() {
     setInterval(async () => {
-      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"])
+      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.router.query.time_machine_offset)
     }, 10000)
   },
 
@@ -318,8 +318,7 @@ export default {
       if(status === "alarm") return "yellow-3";
       if(status === "warning") return "red-3";
       return "yellow-3";
-    },
-
+    }
   }
 
 }
