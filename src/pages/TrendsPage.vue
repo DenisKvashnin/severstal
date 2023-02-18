@@ -9,17 +9,17 @@
     </q-item-section>
   </q-item>
   <div>
-    <ApexArea />
+    <ApexArea :charts="charts" />
   </div>
   <q-drawer show-if-above bordered>
     <q-expansion-item expand-separator label="Подшипники" default-opened>
       <q-expansion-item v-for="bearing in sideMenuData?.bearings" :key="bearing.device_kind.name" expand-separator
         :label="bearing.device_kind.name" :header-inset-level="0.15">
         <q-list style="margin-left: 26px;" v-for="signal in bearing.signal_values" :key="signal.id">
-          <q-item @click="checkSignalId(signal.id)" clickable v-ripple class="ite">
+          <q-item @click="checkSignalId(signal.signal_kind_id)" clickable v-ripple class="ite">
             <q-item-section :class="{ 'selected': ids.has(signal.id) }">
               <div class="row justify-between q-px-xs full-width">
-                <div>{{ signal.signal_kind_code }}</div>
+                <div>{{ signal.signal_kind_short_name }}, {{ signal.signal_kind_dimension }}</div>
                 <div :class="signal.status">{{ signal.value.toFixed(3) }}</div>
               </div>
             </q-item-section>
@@ -31,10 +31,10 @@
       <q-expansion-item v-for="device in sideMenuData?.other_senors" :key="device.device_kind.name" expand-separator
         :label="device.device_kind.name" :header-inset-level="0.15">
         <q-list style="margin-left: 26px;" v-for="signal in device.signal_values" :key="signal.id">
-          <q-item @click="checkSignalId(signal.id)" clickable v-ripple class="ite">
-            <q-item-section :class="{ 'selected': ids.has(signal.id) }">
+          <q-item @click="checkSignalId(signal.signal_kind_id)" clickable v-ripple class="ite">
+            <q-item-section :class="{ 'selected': ids.has(signal.signal_kind_id) }">
               <div class="row justify-between q-px-xs full-width">
-                <div>{{ signal.signal_kind_code }}</div>
+                <div>{{ signal.signal_kind_short_name }}, {{ signal.signal_kind_dimension }}</div>
                 <div :class="signal.status">{{ signal.value.toFixed(3) }}</div>
               </div>
             </q-item-section>
@@ -45,8 +45,9 @@
   </q-drawer>
 </template>
 <script setup>
-import { defineAsyncComponent, onMounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted, ref, watch, computed } from 'vue'
 import AspiratorService from 'src/services/AspiratorService';
+import ChartsService from 'src/services/ChartsService';
 import { useRoute } from 'vue-router'
 
 const ApexArea = defineAsyncComponent(() =>
@@ -55,18 +56,22 @@ const ApexArea = defineAsyncComponent(() =>
 const route = useRoute()
 const sideMenuData = ref()
 const ids = ref(new Set())
-function checkSignalId(id) {
+const charts = ref([])
+async function checkSignalId(id) {
   if (ids.value.has(id)) {
     ids.value.delete(id)
   } else {
     ids.value.add(id)
   }
+  charts.value = await ChartsService.getCharts(Array.from(ids.value))
 }
 
 onMounted(async () => {
   sideMenuData.value = (await AspiratorService.getAspirator(route.params.id)).data.aspirator.sensors_payload
   console.log(sideMenuData.value)
+
 })
+
 </script>
 <style lang="scss" scoped>
 .ite {

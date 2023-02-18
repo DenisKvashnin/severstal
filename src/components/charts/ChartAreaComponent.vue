@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue"
+import { ref, defineProps, computed } from "vue"
 
 const chartOptionsArea = {
   chart: {
@@ -38,53 +38,24 @@ const chartOptionsArea = {
   }
 }
 
-const series = [
-  {
-    data: generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(),
-      900,
-      {
-        min: 30,
-        max: 90
-      })
-  },
-  {
-    data: generateDayWiseTimeSeries(new Date("11 Feb 2017").getTime(),
-      900,
-      {
-        min: 30,
-        max: 90
-      })
-  },
-]
-
+const props = defineProps({
+  charts: Object
+})
 const filteredSeries = computed(() => {
-  return series.map((v) => {
-    const f = v.data.slice(range.value.min, range.value.max)
-    return { data: f }
-  })
+  if (props?.charts?.charts) {
+    const series = []
+    props.charts.charts.forEach((v) => {
+      series.push({ data: v[Object.keys(v)[0]] })
+    })
+    return series
+  }
+
+  return [{ data: [] }]
 })
 
 const range = ref({ min: 0, max: 899 })
 
 
-
-
-function generateDayWiseTimeSeries(baseval, count, yrange) {
-  var i = 0;
-  var series = [];
-  while (i < count) {
-    var x = baseval;
-    var y =
-      Math.floor(Math.random() * (yrange.max - yrange.min + 1)) +
-      yrange.min;
-
-    series.push([x, y]);
-    baseval += 2000;
-    i++;
-  }
-
-  return series;
-}
 </script>
 
 <style lang="scss" scoped>
