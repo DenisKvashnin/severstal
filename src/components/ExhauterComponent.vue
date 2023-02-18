@@ -64,16 +64,21 @@
       </q-expansion-item>
       <q-expansion-item header-class="card-expansion-item weight-3" dense label="Все подшипники">
         <q-list v-for="bearing in bearingStatus" :key="bearing.name" style="font-size: 13px !important;">
-          <q-item
-            :class="{
-              warning: bearing.overall === 'warning', danger: bearing.overall === 'alarm', positive: bearing.overall === 'ok'
-            }"
-            class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
+          <q-item :class="{
+            warning: bearing.overall === 'warning', danger: bearing.overall === 'alarm', positive: bearing.overall === 'ok'
+          }" class="row justify-between rounded-borders q-pa-none q-px-sm q-mb-xs q-ml-sm">
             <q-item-section class="q-my-none">
               {{ bearing.name }}
             </q-item-section>
             <q-item-section class="items-end q-my-none">
-              <q-chip class="damage-chip warning-chip" icon="sensors"></q-chip>
+              <div class="row">
+                <q-chip v-if="bearing.temperature !== 'ok'" :class="{
+                  'warning-chip': bearing.temperature === 'warning', 'danger-chip': bearing.temperature === 'alarm'
+                }" class="damage-chip" icon="thermostat"></q-chip>
+                <q-chip v-if="bearing.vibration !== 'ok' && !!bearing.vibration" :class="{
+                  'warning-chip': bearing.vibration === 'warning', 'danger-chip': bearing.vibration === 'alarm'
+                }" class="damage-chip" icon="sensors"></q-chip>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -107,6 +112,7 @@ const props = defineProps({
 
 onMounted(() => {
   bearingStatus.value = proccessBearings()
+  console.log(bearingStatus.value)
 })
 
 function proccessBearings() {
@@ -181,6 +187,7 @@ function proccessBearings() {
   height: min-content;
   padding: 5px 3px 5px 11px;
   margin: 0;
+  margin-left: 2px;
   border-radius: 6px;
   border: 1px solid;
 }

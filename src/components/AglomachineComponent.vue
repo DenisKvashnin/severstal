@@ -3,7 +3,7 @@
     <div class="exhauter-group-wrapper">
       <div class="exhauter-group-header">{{ props.name }}</div>
       <div class="exhauter-group">
-        <Exhauter v-for="i in props.exhausters" :data="i" :key="i.name" />
+        <Exhauter v-for="i in props.exhausters" :data="i" :key="i.id" />
       </div>
     </div>
   </div>
