@@ -8,7 +8,7 @@
 
       <q-form @submit="loginUser(formData.name, formData.password)">
         <q-input v-model="formData.name" @update:model-value="error = false" :error="error" :rules='[v => !!v || ""]'
-          dense label="login" hint="Введите логин" counter maxlength="20" />
+          dense label="Логин" hint="Введите логин" counter maxlength="20" />
 
         <q-input v-model="formData.password" @update:model-value="error = false" :error="error"
           :rules='[v => !!v || ""]' dense type="password" label="Пароль" hint="Укажите пароль" counter maxlength="20"
