@@ -358,7 +358,6 @@
 import { useRoute } from 'vue-router';
 import { useOffsetStore } from "src/stores/mainStore"
 import AspiratorService from "../services/AspiratorService";
-import { date } from "quasar";
 import moment from 'moment'
 
 export default {
@@ -550,4 +549,5 @@ export default {
 
 .warning {
   background-color: #FAB82E;
-}</style>
+}
+</style>

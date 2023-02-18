@@ -1,11 +1,13 @@
 <template>
   <q-card style="height:min-content">
     <div class="card-header weight-3" :class="props.data.status">
-      <q-icon size="24px"
-        :class="props.data.status == 'alarm' ? 'text-accent' : props.data.status == 'warning' ? 'warning2' : ''"
-        :name="props.data.status == 'alarm' || props.data.status == 'warning' ? 'warning' : ''"></q-icon>
-      <div class="exhghauster_name" style="padding-left: 10px">
-        {{ props.data.name }}
+      <div class="row">
+        <q-icon size="24px" v-if="props.data.status == 'alarm' || props.data.status == 'warning'"
+          :class="props.data.status == 'alarm' ? 'text-accent' : props.data.status == 'warning' ? 'warning2' : ''"
+          :name="props.data.status == 'alarm' || props.data.status == 'warning' ? 'warning' : ''"></q-icon>
+        <div class="exhghauster_name" style="padding-left: 10px">
+          {{ props.data.name }}
+        </div>
       </div>
       <div class="row">
         <button icon="arrow_forward" @click="router.push({ path: `trends/${props.data.id}` })"
@@ -19,12 +21,14 @@
       </div>
     </div>
     <div class="card-main">
-      <div class="row items-center q-mb-sm">
-        <div class="weight-2 q-mr-xs">
-          {{ props.data.rotor_name }}
-        </div>
-        <div style="padding-left: 42.5%">
-          <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">17.02.2012</q-chip>
+      <div class="q-mb-sm">
+        <div class="row justify-between items-center">
+          <div class="weight-2 q-mr-xs">
+            {{ props.data.rotor_name }}
+          </div>
+          <div>
+            <q-chip style="background-color: #F4F4F4;border-radius: 4px;padding:0 4px 0 4px">17.02.2012</q-chip>
+          </div>
         </div>
         <div class="weight-1 q-py-sm">
           Актуальность на:

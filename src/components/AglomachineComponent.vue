@@ -21,6 +21,19 @@ const props = defineProps({
 })
 </script>
 <style lang="scss" scoped>
+.alarm {
+  background-color: $danger;
+}
+
+.ok {
+  background-color: $positive;
+  color: white;
+}
+
+.warning {
+  background-color: $warning;
+}
+
 .exhauter-group-wrapper {
   height: min-content;
 

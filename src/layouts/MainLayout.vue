@@ -9,6 +9,8 @@
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
 
         <q-space />
+        <input style="height:36px" outlined hide-bottom-space class="q-mx-sm" color="primary" v-model="offset" />
+        <q-btn color="primary" @click="offsetStore.setOffset(offset)">установить</q-btn>
         <q-icon class="text-accent notification_icon cursor-pointer"
           @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
@@ -49,16 +51,16 @@
 import { useUserStore } from "src/stores/user"
 import { useRouter } from 'vue-router';
 import { defineAsyncComponent, ref } from 'vue'
+import { useOffsetStore } from "src/stores/mainStore"
 
 import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
 
 
-
-
+const offsetStore = useOffsetStore()
+const offset = ref(offsetStore.offset)
 const router = useRouter()
 const userStorage = useUserStore()
 const notificationDrawerOpen = ref(false)
-
 
 
 const notificationComponent = defineAsyncComponent(() =>

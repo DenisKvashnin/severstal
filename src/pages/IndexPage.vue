@@ -1,18 +1,14 @@
 <template>
   <q-page style="font-family: Arial, Helvetica, sans-serif;">
     <div class="second-header">
-      <q-input hide-bottom-space class="q-mx-sm" color="primary" v-model="offset"
-        :rules="[val => val <= 32567 && val >= 352 || '32456 > значение > 352']" />
-      <q-btn color="primary" @click="makeOffset()">установить</q-btn>
       <q-space />
-
       <div class="agenda">
-        <q-checkbox size="30px" keep-color v-model="sortings.green" label="В работе" color="positive" />
-        <q-checkbox size="30px" keep-color v-model="sortings.yellow" label="Предупреждение" color="primary" />
-        <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
+        <q-radio val="ok" size="30px" keep-color v-model="sortings" label="В работе" color="positive" />
+        <q-radio val="warning" size="30px" keep-color v-model="sortings" label="Предупреждение" color="primary" />
+        <q-radio val="alarm" size="30px" keep-color v-model="sortings" label="Опасность" color="accent" />
+        <q-radio val="all" size="30px" keep-color v-model="sortings" label="Все" color="grey" />
       </div>
       <q-space />
-      <div style="width:360px"></div>
       <q-btn class="question-btn q-mr-lg" dense rounded size="21px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left"
           style="white-space: nowrap;overflow-y: hidden; height: 50px">
@@ -28,34 +24,44 @@
       </q-btn>
     </div>
     <div class="row wrap justify-center">
-      <Aglomachine v-for="machine in machines" :exhausters="machine.aspirators" :name="machine.name" :key="machine.id" />
+      <Aglomachine v-for="machine in filteredMachines" :exhausters="machine.aspirators" :name="machine.name"
+        :key="machine.id" />
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useOffsetStore } from "src/stores/mainStore"
 import Aglomachine from "../components/AglomachineComponent.vue"
 import ExhausterService from "../services/ExhausterService"
 
 const offsetStore = useOffsetStore()
-const sortings = ref({
-  red: false,
-  yellow: false,
-  green: false
-})
-const offset = ref(offsetStore.offset)
+const sortings = ref()
 const machines = ref([])
+
+const filteredMachines = computed(() => {
+  const copy = Object.assign([], machines.value)
+  if (sortings.value === 'all') {
+    return machines.value
+  }
+  return copy.sort((v1, v2) => {
+    if (v1.status === sortings.value && v2.status !== sortings.value) {
+      return -1
+    }
+    if (v2.status === sortings.value && v1.status !== sortings.value) {
+      return 1
+    }
+    return 0
+  })
+})
 
 onMounted(async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
 })
-
-async function makeOffset() {
-  offsetStore.setOffset(offset.value)
+watch(offsetStore, async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
-}
+})
 </script>
 
 <style lang = "scss" scoped>
