@@ -5,37 +5,40 @@
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(oilLevel?.batch_time)}}</strong>
       </q-tooltip>
-      <q-linear-progress dark size="10px" :value="[oilLevel?.value / 100]" :color="[this.toColor(oilLevel?.status)]" class="grey"/>
+      <q-linear-progress v-if="oilLevel?.value" dark size="10px" :value="[oilLevel?.value / 100]" :color="[this.toColor(oilLevel?.status)]" class="grey"/>
+      <q-linear-progress v-else dark size="10px" value="1" color="red" class="grey"/>
+
     </div>
 
-    <div style="left:74.7%;top:30.3%;width: 11.8%" class="liquid-measure exgauster-scheme-text">
+    <div style="left:74.7%;top:30.3%;width: 11.8%" class="exgauster-scheme-text">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(oilPressure?.batch_time)}}</strong>
       </q-tooltip>
-      <q-linear-progress dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[this.toColor(oilPressure?.status)]"/>
+      <q-linear-progress v-if="oilPressure?.value" dark size="10px" :value="[oilPressure?.value / 6.0]" :color="[this.toColor(oilPressure?.status)]" class="grey"/>
+      <q-linear-progress v-else dark size="10px" value="1" color="red" class="grey"/>
     </div>
 
 
-    <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text" :class="[waterAfterCoolerTemp?.status]">
+    <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text" :class="[this.toColorClass(waterAfterCoolerTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(waterAfterCoolerTemp?.batch_time)}}</strong>
       </q-tooltip>
       {{waterAfterCoolerTemp?.value?.toFixed(2)}} °C
     </div>
 
-    <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text" :class="[waterBeforeCoolerTemp?.status]">
+    <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text" :class="[this.toColorClass(waterBeforeCoolerTemp?.status)]">
       {{waterBeforeCoolerTemp?.value?.toFixed(2)}} °C
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(waterBeforeCoolerTemp?.batch_time)}}</strong>
       </q-tooltip>
     </div>
-    <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text" :class="[coolerBeforeTemp?.status]">
+    <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text" :class="[this.toColorClass(coolerBeforeTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(coolerBeforeTemp?.batch_time)}}</strong>
       </q-tooltip>
       {{coolerBeforeTemp?.value?.toFixed(2)}} °C
     </div>
-    <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text" :class="coolerAfterTemp?.status">
+    <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text" :class="[this.toColorClass(coolerAfterTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(coolerAfterTemp?.batch_time)}}</strong>
       </q-tooltip>
@@ -43,25 +46,25 @@
     </div>
 
 
-    <div style="left:72.15%;top:43.6%;" class="exgauster-scheme-text" :class="[rotorCurrent?.status]">
+    <div style="left:72.15%;top:43.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorCurrent?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(rotorCurrent?.batch_time)}}</strong>
       </q-tooltip>
       {{rotorCurrent?.value?.toFixed(2)}}
     </div>
-    <div style="left:72.15%;top:46.6%;" class="exgauster-scheme-text" :class="[statorCurrent?.status]">
+    <div style="left:72.15%;top:46.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorCurrent?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(statorCurrent?.batch_time)}}</strong>
       </q-tooltip>
       {{statorCurrent?.value?.toFixed(2)}}
     </div>
-    <div style="left:72.15%;top:49.6%;" class="exgauster-scheme-text" :class="[rotorVoltage?.status]">
+    <div style="left:72.15%;top:49.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorVoltage?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(rotorVoltage?.batch_time)}}</strong>
       </q-tooltip>
       {{rotorVoltage?.value?.toFixed(2)}}
     </div>
-    <div style="left:72.15%;top:52.6%;" class="exgauster-scheme-text" :class="[statorVoltage?.status]">
+    <div style="left:72.15%;top:52.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorVoltage?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{formatDate(statorVoltage?.batch_time)}}</strong>
       </q-tooltip>
@@ -69,21 +72,23 @@
     </div>
 
 
-    <div style="left:25%;top:24.3%;" class="exgauster-scheme-text">
-      {{}}45 °C
+    <div style="left:25%;top:24.3%;" class="exgauster-scheme-text" :class="[this.toColorClass(temperatureBefore?.status)]">
+      <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+        <strong>{{formatDate(temperatureBefore?.batch_time)}}</strong>
+      </q-tooltip>
+      {{temperatureBefore?.value?.toFixed(0)}} °C
     </div>
-    <div style="left:23.9%;top:28.3%;" class="exgauster-scheme-text">
-      Разряжение, мм.в.ст &nbsp; {{}}74.3
+    <div style="left:23.9%;top:28.3%;" class="exgauster-scheme-text" :class="[this.toColorClass(underpressureBefore?.status)]">
+      <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
+        <strong>{{formatDate(underpressureBefore?.batch_time)}}</strong>
+      </q-tooltip>
+      Разряжение, мм.в.ст &nbsp;{{underpressureBefore?.value?.toFixed(1)}}
     </div>
-    <div style="left:23.9%;top:31.2%;" class="exgauster-scheme-text">
-      Уровень пыли, мг/м3 <span style="margin-left: 2px;">{{}}15</span>
-    </div>
-
 
     <div style="left:15%;top:53.8%;width:5.3%" class="row justify-center exgauster-scheme-text">
       9 ПС
     </div>
-    <div style="left:15%;top:57.2%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing9Temp?.status]">
+    <div style="left:15%;top:57.2%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing9Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -96,7 +101,7 @@
     <div style="left:15%;top:66.3%;width:5.3%" class="row justify-center exgauster-scheme-text">
       8 ПС
     </div>
-    <div style="left:15%;top:69.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8Temp?.status]">
+    <div style="left:15%;top:69.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing8Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -104,7 +109,7 @@
         </q-tooltip>
         {{bearing8Temp?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:15%;top:72.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8VerVibr?.status]">
+    <div style="left:15%;top:72.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing8VerVibr?.status)]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -112,7 +117,7 @@
         </q-tooltip>
         {{bearing8VerVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:15%;top:75.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8HorVibr?.status]">
+    <div style="left:15%;top:75.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing8HorVibr?.status)]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -120,7 +125,7 @@
         </q-tooltip>
         {{bearing8HorVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:15%;top:78.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing8AxiaVibr?.status]">
+    <div style="left:15%;top:78.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing8AxiaVibr?.status)]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -133,7 +138,7 @@
     <div style="left:39.4%;top:31.18%;width:5.3%" class="row justify-center exgauster-scheme-text">
       4 ПС
     </div>
-    <div style="left:39.4%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing4Temp?.status]">
+    <div style="left:39.4%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing4Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -146,7 +151,7 @@
     <div style="left:39.4%;top:68.0%;width:5.3%" class="row justify-center exgauster-scheme-text">
       6 ПС
     </div>
-    <div style="left:39.5%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing6Temp?.status]">
+    <div style="left:39.5%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing6Temp?.status)]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -166,7 +171,7 @@
       </q-tooltip>
     </div>
 
-    <div style="left:39.5%;top:81.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7Temp?.status]">
+    <div style="left:39.5%;top:81.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing7Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -174,7 +179,7 @@
         </q-tooltip>
         {{bearing7Temp?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:39.5%;top:84.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7VerVibr?.status]">
+    <div style="left:39.5%;top:84.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing7VerVibr?.status)]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -182,7 +187,7 @@
         </q-tooltip>
         {{bearing7VerVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:39.5%;top:87.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7HorVibr?.status]">
+    <div style="left:39.5%;top:87.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing7HorVibr?.status)]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -190,7 +195,7 @@
         </q-tooltip>
         {{bearing7HorVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:39.5%;top:90.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing7AxiaVibr?.status]">
+    <div style="left:39.5%;top:90.7%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing7AxiaVibr?.status)]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -203,7 +208,7 @@
     <div style="left:48.1%;top:31.1%;width:5.3%" class="row justify-center exgauster-scheme-text">
       3 ПС
     </div>
-    <div style="left:48.13%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing3Temp?.status]">
+    <div style="left:48.13%;top:34.8%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing3Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -216,7 +221,7 @@
     <div style="left:48.1%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       5 ПС
     </div>
-    <div style="left:48.2%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing5Temp?.status]">
+    <div style="left:48.2%;top:71.6%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing5Temp?.status)]">
       <div>T, °C</div>
       <div>{{bearing5Temp?.value?.toFixed(2)}}</div>
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -228,7 +233,7 @@
     <div style="left:56.4%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       2 ПС
     </div>
-    <div style="left:56.4%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2Temp?.status]">
+    <div style="left:56.4%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing2Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -236,7 +241,7 @@
         </q-tooltip>
         {{bearing2Temp?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:56.4%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2VerVibr?.status]">
+    <div style="left:56.4%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing2VerVibr?.status)]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -244,7 +249,7 @@
         </q-tooltip>
         {{bearing2VerVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:56.4%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2HorVibr?.status]">
+    <div style="left:56.4%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing2HorVibr?.status)]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -252,7 +257,7 @@
         </q-tooltip>
         {{bearing2HorVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:56.4%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing2AxiaVibr?.status]">
+    <div style="left:56.4%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing2AxiaVibr?.status)]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -265,7 +270,7 @@
     <div style="left:74.2%;top:68%;width:5.3%" class="row justify-center exgauster-scheme-text">
       1 ПС
     </div>
-    <div style="left:74.2%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1Temp?.status]">
+    <div style="left:74.2%;top:71.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing1Temp?.status)]">
       <div>T, °C</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -273,7 +278,7 @@
         </q-tooltip>
         {{bearing1Temp?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:74.2%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1VerVibr?.status]">
+    <div style="left:74.2%;top:74.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing1VerVibr?.status)]">
       <div>B, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -281,7 +286,7 @@
         </q-tooltip>
         {{bearing1VerVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:74.2%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1HorVibr?.status]">
+    <div style="left:74.2%;top:77.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing1HorVibr?.status)]">
       <div>Г, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -289,7 +294,7 @@
         </q-tooltip>
         {{bearing1HorVibr?.value?.toFixed(2)}}</div>
     </div>
-    <div style="left:74.2%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[bearing1AxiaVibr?.status]">
+    <div style="left:74.2%;top:80.4%;width: 5.3%;" class="highlighted-val exgauster-scheme-text" :class="[this.toColorClass(bearing1AxiaVibr?.status)]">
       <div>O, мм/с</div>
       <div>
         <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
@@ -304,6 +309,7 @@
 import {useRoute} from 'vue-router';
 import AspiratorService from "../services/AspiratorService";
 import {date} from "quasar";
+import moment from 'moment'
 
 export default {
   data: () => ({
@@ -328,6 +334,8 @@ export default {
 
   computed: {
     bearing9Temp: function () {
+      console.log(this.otherSenors)
+      console.log(this.aspirator)
       return this.bearings[8]?.signal_values[0]
     },
     bearing8Temp: function () {
@@ -427,18 +435,29 @@ export default {
     },
     gate_valveColor: function (){
       return this.toColor(this.otherSenors.filter(s=> s?.device_kind?.name === "Положение задвижки")[0]?.signal_values.filter(s=>s.signal_kind_code==="gas_valve_open")[0]?.status)
+    },
+    underpressureBefore: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Газовый коллектор")[0]?.signal_values.filter(s=> s.signal_kind_code==="underpressure_before")[0]
+    },
+    temperatureBefore: function (){
+      return this.otherSenors.filter(s=> s?.device_kind?.name === "Газовый коллектор")[0]?.signal_values.filter(s=> s.signal_kind_code==="temperature_before")[0]
     }
   },
 
   methods: {
     toColor(status){
+      if(status == null) return "red-3";
       if(status === "ok") return "green-6";
       if(status === "alarm") return "yellow-3";
       if(status === "warning") return "red-3";
       return "yellow-3";
     },
     formatDate(timeStamp){
-      return date.formatDate(timeStamp, 'DD-MM-YYYY HH:mm:ss')
+      return moment(timeStamp).format('M-DD-YYYY hh:mm:ss')
+    },
+    toColorClass(status){
+      if(!status) return "alarm";
+      return status;
     }
   }
 
