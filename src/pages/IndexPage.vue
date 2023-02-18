@@ -42,7 +42,6 @@ const sortings = ref({
 const machines = ref([])
 onMounted(async () => {
   machines.value = (await ExhausterService.getMachines()).sinter_machines
-  console.log(machines.value)
 })
 </script>
 
