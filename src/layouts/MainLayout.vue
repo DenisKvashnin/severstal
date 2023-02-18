@@ -52,13 +52,18 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
   </q-layout>
+  <ButtonResetScreenComponent />
+
 </template>
 
 <script setup>
 import {defineAsyncComponent, ref} from 'vue'
 import { useUserStore } from "src/stores/user"
 import { useRouter } from 'vue-router';
+import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
+
 
 
 const router = useRouter()

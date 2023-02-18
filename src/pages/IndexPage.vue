@@ -8,7 +8,7 @@
         <q-checkbox size="30px" keep-color v-model="sortings.red" label="Опасность" color="accent" />
       </div>
       <q-space />
-      <q-btn class="question-btn q-mr-xl" dense rounded size="18px" unelevated icon="help">
+      <q-btn class="question-btn q-mr-lg" dense rounded size="21px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left"
           style="white-space: nowrap;overflow-y: hidden; height: 50px">
           <div class="hint-group" style="padding-top: 8px;">
