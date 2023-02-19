@@ -3,12 +3,22 @@
     <div class="second-header">
       <q-space />
       <div class="agenda">
-        <q-radio val="ok" size="30px" keep-color v-model="sortings" label="В работе" color="positive" />
-        <q-radio val="warning" size="30px" keep-color v-model="sortings" label="Предупреждение" color="primary" />
-        <q-radio val="alarm" size="30px" keep-color v-model="sortings" label="Авария" color="accent" />
-        <q-radio val="all" size="30px" keep-color v-model="sortings" label="Все" color="grey" />
+        <q-checkbox size="30px" keep-color v-model="checkbox.ok" label="В работе" color="positive" />
+        <q-checkbox size="30px" keep-color v-model="checkbox.warning" label="Предупреждение" color="primary" />
+        <q-checkbox size="30px" keep-color v-model="checkbox.alarm" label="Авария" color="accent" />
       </div>
       <q-space />
+      <q-btn class="question-btn" style="margin-right: 70px;" dense rounded size="21px" unelevated icon="filter_alt">
+        <q-menu :offset="[-44, -4]" auto-close anchor="top left"
+          style="white-space: nowrap;overflow-y: hidden; height: 50px">
+          <div class="hint-group" style="padding-top: 8px;">
+            <q-radio val="ok" size="30px" keep-color v-model="sortings" label="В работе" color="positive" />
+            <q-radio val="warning" size="30px" keep-color v-model="sortings" label="Предупреждение" color="primary" />
+            <q-radio val="alarm" size="30px" keep-color v-model="sortings" label="Авария" color="accent" />
+            <q-radio class="q-mr-xl" val="all" size="30px" keep-color v-model="sortings" label="Все" color="grey" />
+          </div>
+        </q-menu>
+      </q-btn>
       <q-btn class="question-btn q-mr-lg" dense rounded size="21px" unelevated icon="help">
         <q-menu :offset="[-44, -4]" auto-close anchor="top left"
           style="white-space: nowrap;overflow-y: hidden; height: 50px">
@@ -38,10 +48,29 @@ import ExhausterService from "../services/ExhausterService"
 
 const offsetStore = useOffsetStore()
 const sortings = ref()
+const checkbox = ref({ alarm: false, warning: false, ok: false })
 const machines = ref([])
 
 const filteredMachines = computed(() => {
-  const copy = Object.assign([], machines.value)
+  let copy = Object.assign([], machines.value)
+  const arr = []
+  if (checkbox.value.alarm) {
+    arr.push('alarm')
+  }
+  if (checkbox.value.warning) {
+    arr.push('warning')
+  }
+  if (checkbox.value.ok) {
+    arr.push('ok')
+  }
+  if (arr.length) {
+    copy = copy.filter(v => {
+      if (arr.includes(v.status)) {
+        return 1
+      }
+      return 0
+    })
+  }
   if (sortings.value === 'all') {
     return machines.value
   }
@@ -58,10 +87,11 @@ const filteredMachines = computed(() => {
 
 onMounted(async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
-  console.log(machines.value)
+  offsetStore.setBatch(machines.value[1].aspirators[0].batch_time)
 })
 watch(offsetStore, async () => {
   machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
+  offsetStore.setBatch(machines.value[1].aspirators[0].batch_time)
 })
 </script>
 
@@ -83,6 +113,7 @@ watch(offsetStore, async () => {
 .hint-group {
   display: flex !important;
   align-items: center;
+  padding-right: 10px;
 
   & :last-child {
     margin-right: 4px;

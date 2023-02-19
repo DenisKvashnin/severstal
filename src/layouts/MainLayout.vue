@@ -13,9 +13,17 @@
           @click="router.replace({ path: `../trends/${route.params.id}` })" class="card-link-btn shadow-1">
           <q-icon size="30px" name="query_stats" />
         </button>
+
+        <div style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);"
+          @click="setOffsetVal(null); range = null" class="text-black cursor-pointer">
+          +
+        </div>
+        <div style="margin-bottom:4px;margin-right: 10px;" class="text-black">
+          {{ date.formatDate(offsetStore.batch, 'DD-MM-YYYY HH:mm:ss') }}
+        </div>
         <div style="width:300px" class="q-mr-md">
-          <q-slider selection-color="grey" @change="setOffsetVal" track-color="primary" v-model="range" :min="353"
-            :max="32566" />
+          <q-slider label switch-label-side selection-color="grey" @change="setOffsetVal" track-color="primary"
+            v-model="range" :min="353" :max="32566" />
         </div>
         <q-icon class="text-accent notification_icon cursor-pointer"
           @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
@@ -58,8 +66,8 @@ import { useUserStore } from "src/stores/user"
 import { useRouter, useRoute } from 'vue-router';
 import { defineAsyncComponent, ref, onMounted } from 'vue'
 import { useOffsetStore } from "src/stores/mainStore"
-
 import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
+import { date } from 'quasar'
 
 
 const offsetStore = useOffsetStore()
@@ -81,6 +89,7 @@ onMounted(() => {
 const toAdmin = () => {
   window.location.href = "https://evraz-api.kovalev.team/admin/evraz_kafka_datum"
 }
+
 </script>
 
 <style scoped lang="scss">

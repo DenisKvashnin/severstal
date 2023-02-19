@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useOffsetStore = defineStore("offset", {
   state: () => ({
     offset: null,
+    batch: null,
   }),
   getters: {},
   actions: {
@@ -11,7 +12,11 @@ export const useOffsetStore = defineStore("offset", {
         this.offset = offset;
       } else {
         this.offset = null;
+        this.batch = null;
       }
+    },
+    setBatch(batch) {
+      this.batch = batch;
     },
   },
   persist: {
