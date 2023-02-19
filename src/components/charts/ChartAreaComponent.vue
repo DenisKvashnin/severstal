@@ -15,6 +15,10 @@ import { ref, defineProps, computed } from "vue"
 const chartOptionsArea = {
   chart: {
     id: "chartArea",
+    animations: {
+      enabled: false,
+
+    },
     toolbar: {
       autoSelected: "pan",
       show: false

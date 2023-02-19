@@ -383,6 +383,8 @@ export default {
     this.router = useRoute()
     setInterval(async () => {
       this.aspirator = await AspiratorService.getAspirator(this.id, this.store.offset)
+      this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
+      this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
     }, 2000)
   },
 

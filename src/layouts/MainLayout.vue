@@ -15,12 +15,12 @@
         </button>
 
         <div v-if="!route.path.includes('trends')"
-          style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);"
-          @click="setOffsetVal(null); range = null" class="text-black cursor-pointer">
+          style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);" @click="timeout()"
+          class="text-black cursor-pointer">
           +
         </div>
         <div style="margin-bottom:4px;margin-right: 10px;" v-if="!route.path.includes('trends')" class="text-black">
-          {{ moment(offsetStore.batch).locale('ru').format('DD MM YYYY HH:mm::SS ') }}
+          {{ moment(offsetStore.batch).locale('ru').format('DD MM YYYY HH:mm:SS ') }}
         </div>
         <div style="width:300px" class="q-mr-md" v-if="!route.path.includes('trends')">
           <q-slider label switch-label-side selection-color="grey" @change="offsetStore.setOffset" track-color="primary"
@@ -77,7 +77,18 @@ const router = useRouter()
 const route = useRoute()
 const userStorage = useUserStore()
 const notificationDrawerOpen = ref(false)
-
+const debounce = ref(false)
+function timeout() {
+  if (!debounce.value) {
+    setOffsetVal(null); range.value = null
+  } else {
+    return
+  }
+  debounce.value = true
+  setTimeout(() => {
+    debounce.value = false
+  }, 2000)
+}
 function setOffsetVal(v) {
   offsetStore.setOffset(v)
 }
