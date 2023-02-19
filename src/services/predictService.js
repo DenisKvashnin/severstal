@@ -1,22 +1,18 @@
 import httpClient from "../clients/predictHttpClient";
 
-export default class ChartsService {
-  static async getCharts(
-    ids,
-    startTime = "2023-02-17",
-    endTime = "2023-02-18"
-  ) {
-    if (!ids?.length) return null;
+export default class PredictService {
+  static async predict(ids, stDate = "2023-02-16", endDate = "2023-02-18") {
+    console.log(ids);
     const params = {
-      signal_kind_ids: ids,
-      start_time: startTime,
-      end_time: endTime,
+      signal_id: ids,
+      start_date: stDate,
+      end_date: endDate,
     };
     const response = await httpClient()
-      .get(`chart_values`, { params })
+      .get(`predict`, { params })
       .catch((err) => {
         return err;
       });
-    return response.data;
+    return response;
   }
 }

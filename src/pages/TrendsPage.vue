@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ApexArea :charts="charts" :names="Nnames" />
+    <ApexArea :charts="charts" :predictedChart="predictedChart" :names="Nnames" />
   </div>
   <q-drawer show-if-above bordered>
     <q-expansion-item expand-separator label="Подшипники" default-opened>
@@ -40,6 +40,7 @@ import { defineAsyncComponent, onMounted, ref } from 'vue'
 import AspiratorService from 'src/services/AspiratorService';
 import ChartsService from 'src/services/ChartsService';
 import { useRoute } from 'vue-router'
+import PredictService from "../services/predictService"
 
 const ApexArea = defineAsyncComponent(() =>
   import('src/components/charts/ChartAreaComponent.vue')
@@ -49,6 +50,7 @@ const sideMenuData = ref()
 const ids = ref(new Set())
 const charts = ref([])
 const Nnames = ref([])
+const predictedChart = ref([])
 async function checkSignalId(id) {
   if (ids.value.has(id)) {
     ids.value.delete(id)
@@ -56,6 +58,11 @@ async function checkSignalId(id) {
     ids.value.add(id)
   }
   charts.value = await ChartsService.getCharts(Array.from(ids.value))
+  if (ids.value.size == 1) {
+    predictedChart.value = (await PredictService.predict(Array.from(ids.value)[0])).data.data
+  } else {
+    predictedChart.value = null
+  }
   let names = []
   ids.value.forEach(id => {
     sideMenuData.value.bearings.forEach((v) => {

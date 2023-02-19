@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default () => {
-  const baseUrl = "https://jwt-api.kovalev.team/";
+  const baseUrl = "https://evraz-predict.kovalev.team/";
 
   return axios.create({
     baseURL: baseUrl,

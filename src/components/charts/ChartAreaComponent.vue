@@ -47,7 +47,8 @@ const chartOptionsArea = {
 
 const props = defineProps({
   charts: Object,
-  names: Array
+  names: Array,
+  predictedChart: Array,
 })
 const filteredSeries = computed(() => {
   if (props?.charts?.charts) {
@@ -58,6 +59,9 @@ const filteredSeries = computed(() => {
     series.forEach((s, i) => {
       series[i].data = s.data.slice(s.data.length * range.value.min, s.data.length * range.value.max)
     })
+    if (props.predictedChart) {
+      series.push({ data: props.predictedChart })
+    }
     return series
   }
 
