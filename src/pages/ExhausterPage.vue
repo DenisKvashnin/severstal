@@ -23,7 +23,7 @@
     </div>
 
 
-    <div style="left:71.65%;top:3.87%;" class="exgauster-scheme-text"
+    <div style="left:70.85%;top:3.87%;" class="exgauster-scheme-text"
       :class="[this.toColorClass(waterAfterCoolerTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(waterAfterCoolerTemp?.batch_time) }}</strong>
@@ -31,21 +31,21 @@
       {{ waterAfterCoolerTemp?.value?.toFixed(2) }} °C
     </div>
 
-    <div style="left:67.1%;top:3.87%;" class="exgauster-scheme-text"
+    <div style="left:66.9%;top:3.87%;" class="exgauster-scheme-text"
       :class="[this.toColorClass(waterBeforeCoolerTemp?.status)]">
       {{ waterBeforeCoolerTemp?.value?.toFixed(2) }} °C
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(waterBeforeCoolerTemp?.batch_time) }}</strong>
       </q-tooltip>
     </div>
-    <div style="left:62.65%;top:15.87%;" class="exgauster-scheme-text"
+    <div style="left:62.45%;top:15.87%;" class="exgauster-scheme-text"
       :class="[this.toColorClass(coolerBeforeTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(coolerBeforeTemp?.batch_time) }}</strong>
       </q-tooltip>
       {{ coolerBeforeTemp?.value?.toFixed(2) }} °C
     </div>
-    <div style="left:69.4%;top:25.7%;" class="exgauster-scheme-text"
+    <div style="left:69.1%;top:25.7%;" class="exgauster-scheme-text"
       :class="[this.toColorClass(coolerAfterTemp?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(coolerAfterTemp?.batch_time) }}</strong>
@@ -54,25 +54,25 @@
     </div>
 
 
-    <div style="left:72.15%;top:43.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorCurrent?.status)]">
+    <div style="left:71.65%;top:43.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorCurrent?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(rotorCurrent?.batch_time) }}</strong>
       </q-tooltip>
       {{ rotorCurrent?.value?.toFixed(2) }}
     </div>
-    <div style="left:72.15%;top:46.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorCurrent?.status)]">
+    <div style="left:71.65%;top:46.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorCurrent?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(statorCurrent?.batch_time) }}</strong>
       </q-tooltip>
       {{ statorCurrent?.value?.toFixed(2) }}
     </div>
-    <div style="left:72.15%;top:49.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorVoltage?.status)]">
+    <div style="left:71.65%;top:49.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(rotorVoltage?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(rotorVoltage?.batch_time) }}</strong>
       </q-tooltip>
       {{ rotorVoltage?.value?.toFixed(2) }}
     </div>
-    <div style="left:72.15%;top:52.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorVoltage?.status)]">
+    <div style="left:71.65%;top:52.6%;" class="exgauster-scheme-text" :class="[this.toColorClass(statorVoltage?.status)]">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(statorVoltage?.batch_time) }}</strong>
       </q-tooltip>
