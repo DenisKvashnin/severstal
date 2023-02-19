@@ -8,7 +8,6 @@ export default defineStore("offset", {
   getters: {},
   actions: {
     setOffset(offset) {
-      console.log(1);
       if (offset > 352 && offset < 32567) {
         this.offset = offset;
       } else {

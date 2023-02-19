@@ -351,22 +351,9 @@
         {{ bearing1AxiaVibr?.value?.toFixed(2) }}
       </div>
     </div>
-    <div style="color:white;position: absolute;">
-      {{ f }}
-    </div>
     <q-img src="~assets/exgauster-scheme.svg" />
   </div>
 </template>
-<script setup>
-import useOfStore from "src/stores/mainStore"
-import { ref, watch } from 'vue'
-
-const f = ref(1)
-const ofStore = useOfStore()
-watch(ofStore, async () => {
-  f.value += 1
-})
-</script>
 <script>
 import { useRoute } from 'vue-router';
 import useOffsetStore from "src/stores/mainStore"
@@ -388,11 +375,7 @@ export default {
     this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
     this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
   },
-  async updated() {
-    this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
-    this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
-    this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
-  },
+
   async created() {
     setInterval(async () => {
       this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
@@ -400,6 +383,9 @@ export default {
   },
 
   computed: {
+    fix() {
+      return this.store.offset
+    },
     bearing9Temp: function () {
       return this.bearings[8]?.signal_values[0]
     },
@@ -525,6 +511,14 @@ export default {
       return status;
     }
   },
+  watch: {
+    async fix(newV, old) {
+      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], newV)
+      this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
+      this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
+      this.store.setBatch(this.aspirator.data.aspirator.batch_time)
+    }
+  }
 
 }
 
