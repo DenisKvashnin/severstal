@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useOffsetStore = defineStore("offset", {
+export default defineStore("offset", {
   state: () => ({
     offset: null,
     batch: null,

@@ -14,14 +14,15 @@
           <q-icon size="30px" name="query_stats" />
         </button>
 
-        <div style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);"
+        <div v-if="!route.path.includes('trends')"
+          style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);"
           @click="setOffsetVal(null); range = null" class="text-black cursor-pointer">
           +
         </div>
-        <div style="margin-bottom:4px;margin-right: 10px;" class="text-black">
+        <div style="margin-bottom:4px;margin-right: 10px;" v-if="!route.path.includes('trends')" class="text-black">
           {{ date.formatDate(offsetStore.batch, 'DD-MM-YYYY HH:mm:ss') }}
         </div>
-        <div style="width:300px" class="q-mr-md">
+        <div style="width:300px" class="q-mr-md" v-if="!route.path.includes('trends')">
           <q-slider label switch-label-side selection-color="grey" @change="offsetStore.setOffset" track-color="primary"
             v-model="range" :min="353" :max="32566" />
         </div>
@@ -32,7 +33,7 @@
           <q-avatar class="text-black weight-1 cursor-pointer" style="margin-left:10px" rounded color="grey-12"
             text-color="white">
             {{ Array.from(userStorage.user.username)[0].toUpperCase() }}
-            <q-menu persistent auto-close>
+            <q-menu persistent>
               <q-list style="min-width: 100px">
                 <q-item clickable>
                   <q-item-section @click="toAdmin()">Панель администратора</q-item-section>
@@ -65,7 +66,7 @@
 import { useUserStore } from "src/stores/user"
 import { useRouter, useRoute } from 'vue-router';
 import { defineAsyncComponent, ref, onMounted } from 'vue'
-import { useOffsetStore } from "src/stores/mainStore"
+import useOffsetStore from "src/stores/mainStore"
 import ButtonResetScreenComponent from "components/ButtonResetScreenComponent.vue";
 import { date } from 'quasar'
 
