@@ -49,7 +49,7 @@
     </q-header>
 
 
-    <q-drawer v-model="notificationDrawerOpen" overlay :width="1100" side="right"
+    <q-drawer v-model="notificationDrawerOpen" overlay :width="1500" side="right"
       style="box-shadow: -4px 2px 10px 2px rgb(0 0 0 / 20%) inset;">
       <notificationComponent />
     </q-drawer>
