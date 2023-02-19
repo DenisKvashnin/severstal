@@ -48,7 +48,7 @@
           </q-chip>
           <div style="opacity:0.7;font-size: 12px;" class="column q-ml-sm items-center justify-center">
             <div>Прогноз</div>
-            <div class="weight-3">3 сут</div>
+            <div class="weight-3">> 5 сут</div>
           </div>
         </div>
       </div>
