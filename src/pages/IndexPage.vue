@@ -42,7 +42,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
-import { useOffsetStore } from "src/stores/mainStore"
+import useOffsetStore from "src/stores/mainStore"
 import Aglomachine from "../components/AglomachineComponent.vue"
 import ExhausterService from "../services/ExhausterService"
 
