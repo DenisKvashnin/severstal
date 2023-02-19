@@ -1,7 +1,7 @@
 import httpClient from "../clients/predictHttpClient";
 
 export default class PredictService {
-  static async predict(ids, stDate = "2023-02-16", endDate = "2023-02-18") {
+  static async predict(ids, stDate = "2023-02-6", endDate = "2023-02-18") {
     console.log(ids);
     const params = {
       signal_id: ids,
