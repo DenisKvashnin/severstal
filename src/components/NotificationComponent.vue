@@ -39,14 +39,15 @@ export default {
       issues: [],
       search: '',
       columns: [
-        {name: 'exhauster', align: 'center', label: 'Эксгаустер', field: row => row?.aspirator?.name, sortable: true},
-        {name: 'error', label: 'Ошибка', field: row => row.description, sortable: true},
-        {name: 'dateTime', label: 'Дата время', field: row => moment(row?.signal_value?.batch_time).format('M-DD-YYYY hh:mm:ss'), sortable: true},
-        {name: 'signalCode', label: 'Код сигнала', field: row => row?.signal_value?.signal_kind_code, sortable: true},
-        {name: 'signal', label: 'Сигнал', field: row => row?.signal_value?.signal_kind_short_name, sortable: true},
-        {name: 'value', label: 'Значение', field: row => row?.signal_value?.value?.toFixed(2), sortable: true},
-        {name: 'signalKindDimension', label: 'Ед.измр.', field: row => row?.signal_value?.signal_kind_dimension, sortable: true},
-        {name: 'state', label: 'Статус.', field: row => row?.state, sortable: true}
+        {name: 'id', label: 'id', align: 'center', field: row => row?.id, sortable: true},
+        {name: 'exhauster', label: 'Эксгаустер', align: 'center', field: row => row?.aspirator?.name, sortable: true},
+        {name: 'error', label: 'Ошибка', align: 'center', field: row => row.description, sortable: true},
+        {name: 'dateTime', label: 'Дата время', align: 'center', field: row => moment(row?.signal_value?.batch_time).format('M-DD-YYYY hh:mm:ss'), sortable: true},
+        {name: 'signalCode', label: 'Код сигнала', align: 'center', field: row => row?.signal_value?.signal_kind_code, sortable: true},
+        {name: 'signal', label: 'Сигнал', align: 'center', field: row => row?.signal_value?.signal_kind_short_name, sortable: true},
+        {name: 'value', label: 'Значение', align: 'center', field: row => row?.signal_value?.value?.toFixed(2), sortable: true},
+        {name: 'signalKindDimension', label: 'Ед.измр.', align: 'center', field: row => row?.signal_value?.signal_kind_dimension, sortable: true},
+        {name: 'state', label: 'Статус.', align: 'center', field: row => row?.state, sortable: true}
       ]
     }
   },
