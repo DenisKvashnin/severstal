@@ -3,7 +3,8 @@
     <ApexArea :charts="charts" :predictedChart="predictedChart" :names="Nnames" />
   </div>
   <q-drawer show-if-above bordered>
-    <div class="q-px-md q-py-sm weight-2" style="font-size: 24px;border-bottom: 1px solid grey;">{{ name }}</div>
+    <div class="q-px-md q-py-sm weight-2 cursor-pointer" @click="router.push({ path: `../exhauster/${route.params.id}` })"
+      style="font-size: 24px;border-bottom: 1px solid grey;">{{ name }}</div>
     <q-expansion-item expand-separator label="Подшипники" default-opened>
       <q-expansion-item v-for="bearing in sideMenuData?.bearings" :key="bearing.device_kind.name" expand-separator
         :label="bearing.device_kind.name" :header-inset-level="0.15">
@@ -40,12 +41,14 @@
 import { defineAsyncComponent, onMounted, ref } from 'vue'
 import AspiratorService from 'src/services/AspiratorService';
 import ChartsService from 'src/services/ChartsService';
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import PredictService from "../services/predictService"
 
 const ApexArea = defineAsyncComponent(() =>
   import('src/components/charts/ChartAreaComponent.vue')
+
 )
+const router = useRouter()
 const route = useRoute()
 const sideMenuData = ref()
 const ids = ref(new Set())
