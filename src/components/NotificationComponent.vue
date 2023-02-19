@@ -6,6 +6,7 @@
         :rows="rows_requests"
         :columns="columns"
         row-key="name"
+        :pagination="{rowsPerPage:20}"
       >
         <h1>Заявки</h1>
 
@@ -43,7 +44,7 @@ export default {
         {name: 'dateTime', label: 'Дата время', field: row => moment(row?.signal_value?.batch_time).format('M-DD-YYYY hh:mm:ss'), sortable: true},
         {name: 'signalCode', label: 'Код сигнала', field: row => row?.signal_value?.signal_kind_code, sortable: true},
         {name: 'signal', label: 'Сигнал', field: row => row?.signal_value?.signal_kind_short_name, sortable: true},
-        {name: 'value', label: 'Значение', field: row => row?.signal_value?.value, sortable: true},
+        {name: 'value', label: 'Значение', field: row => row?.signal_value?.value?.toFixed(2), sortable: true},
         {name: 'signalKindDimension', label: 'Ед.измр.', field: row => row?.signal_value?.signal_kind_dimension, sortable: true},
         {name: 'state', label: 'Статус.', field: row => row?.state, sortable: true}
       ]
