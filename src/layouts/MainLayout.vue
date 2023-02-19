@@ -22,7 +22,7 @@
           {{ date.formatDate(offsetStore.batch, 'DD-MM-YYYY HH:mm:ss') }}
         </div>
         <div style="width:300px" class="q-mr-md">
-          <q-slider label switch-label-side selection-color="grey" @change="setOffsetVal" track-color="primary"
+          <q-slider label switch-label-side selection-color="grey" @change="offsetStore.setOffset" track-color="primary"
             v-model="range" :min="353" :max="32566" />
         </div>
         <q-icon class="text-accent notification_icon cursor-pointer"

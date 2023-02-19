@@ -364,7 +364,7 @@ export default {
   data: () => ({
     router: null,
     aspirator: null,
-    store: null,
+    store: useOffsetStore(),
     bearings: [],
     otherSenors: []
   }),
@@ -377,7 +377,6 @@ export default {
   },
 
   async created() {
-    this.store = useOffsetStore()
     setInterval(async () => {
       this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
     }, 100000)
@@ -507,6 +506,12 @@ export default {
     toColorClass(status) {
       if (!status) return "alarm";
       return status;
+    }
+  },
+  watch: {
+    store: async function () {
+      console.log(this.router)
+      // this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
     }
   }
 

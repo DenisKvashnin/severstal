@@ -171,7 +171,7 @@ watch(props.data, () => {
 </script>
 <style lang="scss" scoped>
 .card-header {
-  width: 330px;
+  width: 350px;
   height: 40px;
   font-size: 15px;
   display: flex;
