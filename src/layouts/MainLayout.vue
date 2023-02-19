@@ -20,7 +20,7 @@
           +
         </div>
         <div style="margin-bottom:4px;margin-right: 10px;" v-if="!route.path.includes('trends')" class="text-black">
-          {{ moment(Date.parse(offsetStore.batch) + 86400000 / 8).format('DD.MM.YY H:MM') }}
+          {{ moment(offsetStore.batch).locale('ru').format('DD-mm-YYYY HH:MM::SS ') }}
         </div>
         <div style="width:300px" class="q-mr-md" v-if="!route.path.includes('trends')">
           <q-slider label switch-label-side selection-color="grey" @change="offsetStore.setOffset" track-color="primary"
