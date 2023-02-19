@@ -5,9 +5,9 @@
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(oilLevel?.batch_time) }}</strong>
       </q-tooltip>
-      <q-linear-progress v-if="oilLevel?.value" dark size="10px" :value="[oilLevel?.value / 100]"
-        :color="[this.toColor(oilLevel?.status)]" class="grey" />
-      <q-linear-progress v-else dark size="10px" value="1" color="red" class="grey" />
+      <q-linear-progress v-if="oilLevel?.value" dark size="10px" :value="oilLevel?.value / 100"
+        :color="this.toColor(oilLevel?.status)" class="grey" />
+      <q-linear-progress v-else dark size="10px" :value="1" color="red" class="grey" />
 
     </div>
 
@@ -15,9 +15,9 @@
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(oilPressure?.batch_time) }}</strong>
       </q-tooltip>
-      <q-linear-progress v-if="oilPressure?.value" dark size="10px" :value="[oilPressure?.value / 6.0]"
-        :color="[this.toColor(oilPressure?.status)]" class="grey" />
-      <q-linear-progress v-else dark size="10px" value="1" color="red" class="grey" />
+      <q-linear-progress v-if="oilPressure?.value" dark size="10px" :value="oilPressure?.value / 6.0"
+        :color="this.toColor(oilPressure?.status)" class="grey" />
+      <q-linear-progress v-else dark size="10px" :value="1" color="red" class="grey" />
     </div>
 
 
@@ -187,7 +187,7 @@
     </div>
 
     <div style="left:26.6%;top:88.77%;width:4.4%;" class="row justify-center exgauster-scheme-text">
-      <q-linear-progress dark size="11.2px" :value="[gate_valve?.value]" :color="[gate_valveColor]" />
+      <q-linear-progress dark size="11.2px" :value="gate_valve?.value" :color="gate_valveColor" />
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(gate_valve?.batch_time) }}</strong>
       </q-tooltip>
@@ -511,7 +511,7 @@ export default {
 
   methods: {
     toColor(status) {
-      if (status == null) return "red-3";
+      if (status == null) return "FF0000";
       if (status === "ok") return "green-6";
       if (status === "alarm") return "yellow-3";
       if (status === "warning") return "red-3";
