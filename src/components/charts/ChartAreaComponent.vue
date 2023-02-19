@@ -4,7 +4,7 @@
       <apexchart type="line" :height="720" :options="chartOptionsArea" :series="filteredSeries" />
     </div>
     <div class="slider-container">
-      <q-range v-model="range" :step="0.001" :min="0" :max="1" />
+      <q-range v-model="range" @change="setC" :step="0.001" :min="0" :max="1" />
     </div>
   </div>
 </template>
@@ -44,7 +44,10 @@ const chartOptionsArea = {
     decimalsInFloat: 2
   }
 }
-
+function setC(v) {
+  c.value = v
+}
+const c = ref({ min: 0, max: 1 })
 const props = defineProps({
   charts: Object,
   names: Array,
@@ -57,7 +60,7 @@ const filteredSeries = computed(() => {
       series.push({ data: v[Object.keys(v)[0]], name: props.names[i] })
     })
     series.forEach((s, i) => {
-      series[i].data = s.data.slice(s.data.length * range.value.min, s.data.length * range.value.max)
+      series[i].data = s.data.slice(s.data.length * c.value.min, s.data.length * c.value.max)
     })
     if (props.predictedChart) {
       series.push({ data: props.predictedChart })

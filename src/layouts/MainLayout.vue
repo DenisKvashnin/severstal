@@ -3,13 +3,13 @@
     <q-header v-if="router.currentRoute.value.path !== '/auth'" style="backgroundColor:white" elevated>
       <q-toolbar style="height:54px">
         <div v-if="router.currentRoute.value.path === '/trends'" style="width:182px">
-          <q-btn flat dense size="24px" style="margin-left:-7px" color="primary" round icon="menu" aria-label="Menu"
+          <q-btn flat dense size="24px" style="margin-left:-7px;" color="primary" round icon="menu" aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen" />
         </div>
         <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
 
         <q-space />
-        <button icon="arrow_forward" v-if="route.path.includes('exhauster')"
+        <button style="margin-right: 10px" icon="arrow_forward" v-if="route.path.includes('exhauster')"
           @click="router.replace({ path: `../trends/${route.params.id}` })" class="card-link-btn shadow-1">
           <q-icon size="30px" name="query_stats" />
         </button>

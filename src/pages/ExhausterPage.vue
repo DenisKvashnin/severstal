@@ -1,6 +1,8 @@
 <template>
   <div style="position: relative;">
-
+    <div style="position: absolute;left:1.2%;top:3.2%;font-size: 24px;" class="weight-3">
+      {{ aspirator?.data?.aspirator?.name }}
+    </div>
     <div style="left:49.6%;top:16%;width:10.19%" class="exgauster-scheme-text">
       <q-tooltip anchor="center right" self="center left" :offset="[10, 10]">
         <strong>{{ formatDate(oilLevel?.batch_time) }}</strong>
@@ -366,19 +368,21 @@ export default {
     aspirator: null,
     store: useOffsetStore(),
     bearings: [],
-    otherSenors: []
+    otherSenors: [],
+    id: ''
   }),
 
   async mounted() {
-    this.router = useRoute()
+    this.id = this.router.params["id"]
     this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
     this.bearings = this.aspirator?.data?.aspirator?.sensors_payload?.bearings
     this.otherSenors = this.aspirator?.data?.aspirator?.sensors_payload?.other_senors
   },
 
   async created() {
+    this.router = useRoute()
     setInterval(async () => {
-      this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
+      this.aspirator = await AspiratorService.getAspirator(this.id, this.store.offset)
     }, 2000)
   },
 

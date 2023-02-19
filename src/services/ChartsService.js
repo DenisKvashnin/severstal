@@ -3,7 +3,7 @@ import httpClient from "../clients/exhausterHttpClient";
 export default class ChartsService {
   static async getCharts(
     ids,
-    startTime = "2023-02-17",
+    startTime = "2023-02-13",
     endTime = "2023-02-18"
   ) {
     if (!ids?.length) return null;

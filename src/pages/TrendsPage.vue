@@ -3,6 +3,7 @@
     <ApexArea :charts="charts" :predictedChart="predictedChart" :names="Nnames" />
   </div>
   <q-drawer show-if-above bordered>
+    <div class="q-px-md q-py-sm weight-2" style="font-size: 24px;border-bottom: 1px solid grey;">{{ name }}</div>
     <q-expansion-item expand-separator label="Подшипники" default-opened>
       <q-expansion-item v-for="bearing in sideMenuData?.bearings" :key="bearing.device_kind.name" expand-separator
         :label="bearing.device_kind.name" :header-inset-level="0.15">
@@ -82,9 +83,11 @@ async function checkSignalId(id) {
   })
   Nnames.value = names
 }
-
+const name = ref('')
 onMounted(async () => {
-  sideMenuData.value = (await AspiratorService.getAspirator(route.params.id)).data.aspirator.sensors_payload
+  sideMenuData.value = (await AspiratorService.getAspirator(route.params.id)).data.aspirator
+  name.value = sideMenuData.value.name
+  sideMenuData.value = sideMenuData.value.sensors_payload
 })
 
 </script>
