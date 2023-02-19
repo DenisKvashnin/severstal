@@ -5,7 +5,7 @@
       <div class="agenda">
         <q-checkbox size="30px" keep-color v-model="checkbox.ok" label="В работе" color="positive" />
         <q-checkbox size="30px" keep-color v-model="checkbox.warning" label="Предупреждение" color="primary" />
-        <q-checkbox size="30px" keep-color v-model="checkbox.alarm" label="Авария" color="accent" />
+        <q-checkbox size="30px" keep-color v-model="checkbox.alarm" label="Опасность" color="accent" />
       </div>
       <q-space />
       <q-btn class="question-btn" style="margin-right: 70px;" dense rounded size="21px" unelevated icon="filter_alt">

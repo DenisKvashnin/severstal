@@ -379,7 +379,7 @@ export default {
   async created() {
     setInterval(async () => {
       this.aspirator = await AspiratorService.getAspirator(this.router.params["id"], this.store.offset)
-    }, 100000)
+    }, 2000)
   },
 
   computed: {
