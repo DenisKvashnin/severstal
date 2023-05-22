@@ -1,33 +1,15 @@
 <template>
   <q-layout view="hHh lpr lFf" class="main-layout-container">
     <q-header v-if="router.currentRoute.value.path !== '/auth'" style="backgroundColor:white" elevated>
+
       <q-toolbar style="height:54px">
         <div v-if="router.currentRoute.value.path === '/trends'" style="width:182px">
           <q-btn flat dense size="24px" style="margin-left:-7px;" color="primary" round icon="menu" aria-label="Menu"
             @click="leftDrawerOpen = !leftDrawerOpen" />
         </div>
-        <img v-else src="~assets/evraz-logo.svg" @click="router.push({ path: '/' })" class="evraz-logo cursor-pointer" />
+        <img v-else src="~assets/severstal-logo.webp" @click="router.push({ path: '/' })" class="severstal-logo cursor-pointer" />
 
         <q-space />
-        <button style="margin-right: 10px" icon="arrow_forward" v-if="route.path.includes('exhauster')"
-          @click="router.replace({ path: `../trends/${route.params.id}` })" class="card-link-btn shadow-1">
-          <q-icon size="30px" name="query_stats" />
-        </button>
-
-        <div v-if="!route.path.includes('trends')"
-          style="margin-right: 8px;margin-bottom:7px;font-size: 40px;transform: rotate(45deg);" @click="timeout()"
-          class="text-black cursor-pointer">
-          +
-        </div>
-        <div style="margin-bottom:4px;margin-right: 10px;" v-if="!route.path.includes('trends')" class="text-black">
-          {{ moment(offsetStore.batch).locale('ru').format('DD MM YYYY HH:mm:SS ') }}
-        </div>
-        <div style="width:300px" class="q-mr-md" v-if="!route.path.includes('trends')">
-          <q-slider label switch-label-side selection-color="grey" @change="offsetStore.setOffset" track-color="primary"
-            v-model="range" :min="353" :max="32566" />
-        </div>
-        <q-icon class="text-accent notification_icon cursor-pointer"
-          @click="notificationDrawerOpen = !notificationDrawerOpen" size="26px" name="notification_important" />
         <div class="q-pa-md q-gutter-sm">
 
           <q-avatar class="text-black weight-1 cursor-pointer" style="margin-left:10px" rounded color="grey-12"
@@ -35,6 +17,9 @@
             {{ Array.from(userStorage.user.username)[0].toUpperCase() }}
             <q-menu persistent>
               <q-list style="min-width: 100px">
+                <q-item clickable>
+                  <q-item-section @click="toSetting()">Настройки</q-item-section>
+                </q-item>
                 <q-item clickable>
                   <q-item-section @click="toAdmin()">Панель администратора</q-item-section>
                 </q-item>
@@ -102,6 +87,10 @@ const toAdmin = () => {
   window.location.href = "https://evraz-api.kovalev.team/admin/evraz_kafka_datum"
 }
 
+ const toSetting = () => {
+      router.push('/setting');
+  };
+
 </script>
 
 <style scoped lang="scss">
@@ -127,7 +116,7 @@ const toAdmin = () => {
   }
 }
 
-.evraz-logo {
+.severstal-logo {
   position: absolute;
   width: 132.53px;
   height: 34px;
@@ -139,7 +128,7 @@ const toAdmin = () => {
   height: 54px;
 }
 
-.evraz-logo :hover {
+.severstal-logo :hover {
   cursor: pointer;
 }
 

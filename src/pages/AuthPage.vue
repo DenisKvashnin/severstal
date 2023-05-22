@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper">
+    <div class="background-image"></div>
     <div class="card">
       <div class="welcome-label"><span style="font-size: 40px">
-              <img src="~assets/evraz-logo.svg" class="cursor-pointer" style="width: 200px" />
+              <img src="~assets/severstal-logo.webp" class="cursor-pointer" style="width: 200px" />
 
       </span></div>
 
@@ -18,7 +19,7 @@
           <q-btn type="submit" unelevated rounded color="primary" class="button">
             Продолжить
           </q-btn>
-          <div class="separator"><span>Или</span></div>
+          <div class="separator"></div>
           <q-btn outline rounded color="primary" @click="loginUser('predictodemo', 'predictodemo')" class="button">
             Войти как гость
           </q-btn>
@@ -62,11 +63,23 @@ async function loginUser(login, pass) {
   justify-content: center;
 }
 
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/bg.webp"); /* Replace with your background image path */
+  background-size: cover;
+  opacity: 0.2; /* Adjust the opacity as needed */
+}
+
 .card {
   width: 540px;
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0px 10px 30px rgba(210, 209, 222, 0.5);
+  box-shadow: 0px 10px 30px rgba(170, 168, 191, 0.5);
   background: white;
   text-align: center;
 
