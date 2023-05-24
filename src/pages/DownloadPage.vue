@@ -11,7 +11,7 @@
         label="Загрузить файл"
       >
         <template v-slot:append>
-          <q-icon name="add_circle_outline" size="30px" color="secondary" />
+          <q-icon name="add_circle_outline" size="30px" color="primary" />
         </template>
       </q-file>
       <div>

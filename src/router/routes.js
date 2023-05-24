@@ -3,7 +3,11 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", name: 'Home', component: () => import("pages/IndexPage.vue") },
+      {
+        path: "",
+        name: "Home",
+        component: () => import("pages/IndexPage.vue"),
+      },
       { path: "/auth", component: () => import("pages/AuthPage.vue") },
       {
         path: "/exhauster/:id",
@@ -16,13 +20,18 @@ const routes = [
       },
       {
         path: "/setting",
-        component: () => import("pages/SettingPage.vue")
+        component: () => import("pages/SettingPage.vue"),
+      },
+      {
+        path: "/analysis",
+        name: "Analysis",
+        component: () => import("pages/AnalysisPage.vue"),
       },
       {
         path: "/download",
         name: "Download",
-        component: () => import("pages/DownloadPage.vue")
-      }
+        component: () => import("pages/DownloadPage.vue"),
+      },
     ],
   },
 

@@ -42,7 +42,7 @@
             <div
               @mouseover="setUnderline(1)"
               @mouseleave="dropUnderline()"
-              @click="shown = !shown"
+              @click="router.push({ name: 'Analysis' })"
             >
               Анализ
             </div>
@@ -155,7 +155,7 @@ function dropUnderline() {
     curUnderlineWidth.value = undelineData[0].width;
     curUnderlineMargin.value = undelineData[0].margin;
   }
-  if (router.currentRoute.value.name === "Analis") {
+  if (router.currentRoute.value.name === "Analysis") {
     curUnderlineWidth.value = undelineData[1].width;
     curUnderlineMargin.value = undelineData[1].margin;
   }
