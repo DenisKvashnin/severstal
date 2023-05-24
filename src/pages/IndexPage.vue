@@ -86,12 +86,10 @@ const filteredMachines = computed(() => {
 })
 
 onMounted(async () => {
-  machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
-  offsetStore.setBatch(machines.value[1].aspirators[0].batch_time)
+  machines.value = (await ExhausterService.getMachines()).sinter_machines
 })
 watch(offsetStore, async () => {
-  machines.value = (await ExhausterService.getMachines(offsetStore.offset)).sinter_machines
-  offsetStore.setBatch(machines.value[1].aspirators[0].batch_time)
+  machines.value = (await ExhausterService.getMachines()).sinter_machines
 })
 </script>
 
