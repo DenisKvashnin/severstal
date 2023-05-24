@@ -26,8 +26,13 @@
               <div class="row items-center justify-center" style="width: 120px">
                 {{ (file.size / 1024).toFixed(1) + " кб" }}
               </div>
-              <div class="row items-center q-mx-lg">{{ file.created_at }}</div>
-              <div class="row items-center q-mx-lg">{{ file.file_type }}</div>
+              <div class="row items-center q-mx-sm">{{ file.created_at }}</div>
+              <div
+                class="row items-center q-mx-lg justify-center"
+                style="min-width: 80px"
+              >
+                {{ file.file_type }}
+              </div>
               <div>
                 <q-btn
                   v-show="!file.isDownloading"
@@ -35,7 +40,7 @@
                   @click="download(file, i)"
                   flat
                   round
-                  color="secondary"
+                  color="primary"
                   icon="description"
                 />
                 <q-spinner
@@ -51,7 +56,7 @@
                   @click="dropFile(file.id)"
                   flat
                   round
-                  color="secondary"
+                  color="negative"
                   icon="delete"
                 />
               </div>
@@ -98,6 +103,7 @@ onMounted(async () => {
   files.value = (await FileService.getFiless()).data.map((file) => {
     return { ...file, isDownloading: false };
   });
+  console.log(files.value);
 });
 
 function checkResp(resp, message = "Данные добавлены") {
