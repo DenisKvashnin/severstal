@@ -1,32 +1,59 @@
 <template>
   <q-page class="flex justify-center q-pt-lg">
     <div class="wrapper-settings">
-      <q-file color="primary" class="q-mb-lg" :loading="fileLoading" @update:model-value="uploadFile" v-model="file"
-        label-color="secondary" label="Загрузить файл">
+      <q-file
+        color="primary"
+        class="q-mb-lg"
+        :loading="fileLoading"
+        @update:model-value="uploadFile"
+        v-model="file"
+        label-color="secondary"
+        label="Загрузить файл"
+      >
         <template v-slot:append>
           <q-icon name="add_circle_outline" size="30px" color="secondary" />
         </template>
       </q-file>
       <div>
         <div class="table shadow-3">
-          <div class="head shadow-2">
-            Загруженные файлы
-          </div>
-          <div v-for="file in files" :key="file.id" class="t-row">
+          <div class="head shadow-2">Загруженные файлы</div>
+          <div v-for="(file, i) in files" :key="file.id" class="t-row">
             <div>
               {{ file.filename }}
             </div>
             <q-space></q-space>
             <div class="row">
-              <div class="row items-center justify-center" style="width:120px">{{ (file.size / 1024).toFixed(1) + " кб" }}
+              <div class="row items-center justify-center" style="width: 120px">
+                {{ (file.size / 1024).toFixed(1) + " кб" }}
               </div>
               <div class="row items-center q-mx-lg">{{ file.created_at }}</div>
               <div class="row items-center q-mx-lg">{{ file.file_type }}</div>
               <div>
-                <q-btn size="15px" @click="router.push({ name: 'login' })" flat round color="secondary"
-                  icon="description" />
-                <q-btn size="15px" style="margin-right: -7px;" @click="dropFile(file.id)" flat round color="secondary"
-                  icon="delete" />
+                <q-btn
+                  v-show="!file.isDownloading"
+                  size="15px"
+                  @click="download(file, i)"
+                  flat
+                  round
+                  color="secondary"
+                  icon="description"
+                />
+                <q-spinner
+                  style="margin: 0 12px 0 12px"
+                  v-show="file.isDownloading"
+                  size="20px"
+                  :thickness="6"
+                  color="primary"
+                />
+                <q-btn
+                  size="15px"
+                  style="margin-right: -7px"
+                  @click="dropFile(file.id)"
+                  flat
+                  round
+                  color="secondary"
+                  icon="delete"
+                />
               </div>
             </div>
           </div>
@@ -37,46 +64,61 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Notify } from 'quasar'
-import { onMounted } from 'vue';
-import FileService from 'src/services/FileService';
+import { ref } from "vue";
+import { Notify } from "quasar";
+import { onMounted } from "vue";
+import FileService from "src/services/FileService";
 
-const fileLoading = ref(false)
-const file = ref()
-const files = ref([])
+const fileLoading = ref(false);
+const file = ref();
+const files = ref([]);
+
+async function download({ url, filename }, i) {
+  files.value[i].isDownloading = true;
+  await fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+    })
+    .catch(console.error);
+  files.value[i].isDownloading = false;
+}
+
+async function dropFile(id) {
+  await FileService.dropFile(id);
+  files.value = (await FileService.getFiless()).data.map((file) => {
+    return { ...file, isDownloading: false };
+  });
+}
 
 onMounted(async () => {
-  files.value = (await FileService.getFiless()).data
-  console.log(files.value)
-})
-function checkResp(resp, message = 'Данные добавлены') {
+  files.value = (await FileService.getFiless()).data.map((file) => {
+    return { ...file, isDownloading: false };
+  });
+});
 
+function checkResp(resp, message = "Данные добавлены") {
   if (resp.error) {
-
     Notify.create({
-      color: 'negative',
-      message: 'Произошла ошибка'
-    })
+      color: "negative",
+      message: "Произошла ошибка",
+    });
   } else {
     Notify.create({
-      color: 'positive',
-      message: message
-    })
+      color: "positive",
+      message: message,
+    });
   }
 }
 async function uploadFile(v) {
-  fileLoading.value = true
-  const resp = await FileService.uploadFile(v)
-  fileLoading.value = false
-  checkResp(resp)
-  files.value = (await FileService.getFiless()).data
-
-}
-async function dropFile(id) {
-  const resp = await FileService.dropFile(id)
-  files.value = (await FileService.getUploaded()).data
-  checkResp(resp, 'файл удалён')
+  fileLoading.value = true;
+  const resp = await FileService.uploadFile(v);
+  fileLoading.value = false;
+  checkResp(resp);
+  files.value = (await FileService.getFiless()).data;
 }
 </script>
 <style scoped lang="scss">
