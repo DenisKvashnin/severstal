@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "deploy": "npm run build && rsync -e 'ssh -p 2848' -a --delete-before dist/spa/ serveriot@cnc.kovalev.team:/home/vitalya/evraz-front/ --delete"
+    "deploy": "npm run build && rsync -e 'ssh -p 2848' -a --delete-before dist/spa/ serveriot@cnc.kovalev.team:/home/serveriot/severstal-front/ --delete"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
