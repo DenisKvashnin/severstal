@@ -15,7 +15,7 @@
           keep-color
           v-model="checkbox.warning"
           label="Предупреждение"
-          color="primary"
+          color="info"
         />
         <q-checkbox
           size="30px"
@@ -56,7 +56,7 @@
               keep-color
               v-model="sortings"
               label="Предупреждение"
-              color="primary"
+              color="info"
             />
             <q-radio
               val="alarm"
@@ -122,7 +122,7 @@
               Предупреждение
               <q-icon
                 size="24px"
-                color="primary"
+                color="info"
                 name="warning"
                 class="agenda-tips"
               ></q-icon>

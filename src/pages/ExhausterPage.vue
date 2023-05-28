@@ -748,7 +748,6 @@ export default {
         this.aspirator?.data?.aspirator?.sensors_payload?.other_senors;
     },
   },
-  w,
 };
 </script>
 <style lang="scss" scoped>
