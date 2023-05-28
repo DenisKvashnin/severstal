@@ -10,6 +10,11 @@ const routes = [
         component: () => import("pages/ExhausterPage.vue"),
       },
       {
+        path: "/upload",
+        name: "Download",
+        component: () => import("pages/DownloadPage.vue"),
+      },
+      {
         path: "/trends/:id",
         component: () => import("pages/TrendsPage.vue"),
         name: "trends",

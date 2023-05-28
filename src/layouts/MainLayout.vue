@@ -28,7 +28,16 @@
           @click="router.push({ path: '/' })"
           class="evraz-logo cursor-pointer"
         />
-
+        <q-btn
+          round
+          flat
+          @click="router.push({ name: 'Download' })"
+          icon="upload_file"
+          color="primary"
+          size="16px"
+          style="margin-left: 170px"
+        >
+        </q-btn>
         <q-space />
         <button
           style="margin-right: 10px"
